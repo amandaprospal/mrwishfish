@@ -1,0 +1,11 @@
+{
+  "name": "wishlist_server",
+  "main": "server.js",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+      "body-parser": "~1.0.1",
+      "express": "~4.10.6",
+      "mysql": "^2.5.4"
+  }
+}
