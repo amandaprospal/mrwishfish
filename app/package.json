@@ -1,18 +1,22 @@
 {
-  "name": "wishlist",
+  "name": "wishlist-app",
   "version": "0.1.0",
   "private": true,
-  "devDependencies": {
-    "react-scripts": "0.8.0"
-  },
   "dependencies": {
     "react": "^15.4.1",
     "react-dom": "^15.4.1"
   },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0",
+    "react-scripts": "0.8.0",
+    "sinon": "^1.17.7"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "/* test */": "react-scripts test --env=jsdom",
+    "test": "./node_modules/.bin/mocha --reporter nyan",
     "eject": "react-scripts eject"
   }
 }
