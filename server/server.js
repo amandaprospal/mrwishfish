@@ -1,4 +1,5 @@
 var bodyParser = require('body-parser');
+var bunyan = require('bunyan');
 var config = require('./config/config.js');
 var express = require('express');
 var mysql = require('mysql');
@@ -6,6 +7,12 @@ var mysql = require('mysql');
 var SERVER_PORT = config.server.port;
 
 var app = express();
+
+// Set up logger
+var logger = bunyan.createLogger({
+    name: 'wishlist-server'
+});
+app.set('logger', logger);
 
 // Set up body-parser
 app.use(bodyParser.urlencoded({
