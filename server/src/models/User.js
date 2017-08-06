@@ -1,35 +1,98 @@
+'use strict';
+
 var userDAO = require('../db/mysql/dao/userDAO.js');
 
-var User = function (data) {
-    this.data = data;
-}
+/**
+ * Represents a User.
+ */
+class User {
+    /**
+     * Creates a User.
+     * 
+     * @param {String} firstName The user's first name.
+     * @param {String} lastName The user's last name.
+     * @param {String} emailAddress The user's email address.
+     */
+    constructor(firstName, lastName, emailAddress) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.emailAddress = emailAddress;
+    }
 
-User.prototype.data = {};
+    /**
+     * Gets the user's first name.
+     * 
+     * @return {String} The user's first name.
+     */
+    getFirstName() {
+        return this.firstName;
+    }
 
-User.prototype.get = function (name) {
-    return this.data[name];
-}
+    /**
+     * Sets the user's first name.
+     * 
+     * @param {String} firstName The user's first name.
+     */
+    setFirstName(firstName) {
+        this.firstName = firstName;
+    }
 
-User.prototype.set = function (name, value) {
-    this.data[name] = value;
-}
+    /**
+     * Gets the user's last name.
+     * 
+     * @return {String} The user's last name.
+     */
+    getLastName() {
+        return this.lastName;
+    }
 
-User.prototype.changeName = function (username) {
-    this.data.username = username;
-}
+    /**
+     * Sets the user's last name.
+     * 
+     * @param {String} lastName The user's last name.
+     */
+    setLastName(lastName) {
+        this.lastName = lastName;
+    }
 
-User.prototype.save = function (callback) {
-    var self = this;
-    
-}
+    /**
+     * Gets the user's email address.
+     * @return {String} The user's email address.
+     */
+    getEmailAddress() {
+        return this.emailAddress;
+    }
 
-User.findById = function (id, callback) {
-    userDAO.findById(id, callback);
-}
+    /**
+     * Sets the user's email address.
+     * 
+     * @param {String} emailAddress The user's email address.
+     */
+    setEmailAddress(emailAddress) {
+        this.emailAddress = emailAddress;
+    }
 
-User.getAllUsers = function (req, res, callback) {
-    userDAO.getUsers(req, res, callback);
+    toString() {
+        return 'First name: ' + this.firstName + ', Last name: ' + this.lastName + ', Email address: ' + this.emailAddress;
+    }
+
+    print() {
+        console.log(this.toString());
+    }
+
+    getUser (callback) {
+        userDAO.getUser(callback);
+    }
+
+    /**
+     * Creates a new user within the system.
+     * 
+     * @param {User} user The user to create.
+     * @param {function} callback The function to callback to after this function finishes executing.
+     */
+    createUser(user, callback) {
+        userDAO.createUser(user, callback);
+    }
 }
 
 module.exports = User;
-//module.exports.getUsers = getUsers;

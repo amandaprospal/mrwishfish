@@ -1,21 +1,22 @@
 {
-  "name": "wishlist-server",
+  "name": "wishlist-api",
+  "description": "The Wishlist API",
   "main": "server.js",
   "version": "0.0.1",
   "private": true,
   "dependencies": {
     "body-parser": "~1.0.1",
-    "bunyan": "^1.8.8",
     "express": "~4.10.6",
     "mysql": "^2.5.4"
   },
   "devDependencies": {
     "chai": "^3.5.0",
+    "chai-http": "^2.0.1",
     "jshint": "^2.9.4",
     "mocha": "^3.2.0",
     "sinon": "^1.17.7"
   },
   "scripts": {
-    "test": "./node_modules/.bin/mocha --reporter nyan"
+    "test": "./node_modules/.bin/mocha --recursive"
   }
 }
