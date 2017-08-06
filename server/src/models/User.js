@@ -95,4 +95,38 @@ class User {
     }
 }
 
+/**
+ * Retrieves a user by the user's id.
+ * 
+ * @param {String} userId The user's id.
+ * @param {function} callback The function to callback to after this function finishes executing.
+ * 
+ * @return void
+ */
+function getUser(userId, callback) {
+    userDAO.getUser(userId, function(err, data) {
+        if (!err) {
+            var userData = data;            
+
+            if (data.length === 0) {
+                callback('No matching users were found.');
+            } else if (data.length === 1) {
+                //transform user data into a User object
+                var first_name = userData[0].first_name;
+                var last_name = userData[0].last_name;
+                var email_address = userData[0].email_address;
+
+                var user = new User(first_name, last_name, email_address);
+
+                callback(null, user);
+            } else {
+                callback('The database did not return the expected number of results.');
+            }
+        } else {
+            callback(err);
+        }
+    });
+}
+
 module.exports = User;
+module.exports.getUser = getUser;
