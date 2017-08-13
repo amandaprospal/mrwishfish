@@ -155,4 +155,41 @@ class WishlistItem {
     }
 }
 
+/**
+ * Retrieves a wishlist item by its id.
+ * 
+ * @param {Number} wishlistItemId The wishlist item id.
+ * @param {function} callback The function to callback to after this function finishes executing.
+ * 
+ * @return void
+ */
+function getWishlistItem(wishlistItemId, callback) {
+    wishlistItemDAO.getWishlistItem(wishlistItemId, function(err, data) {
+        if (!err) {
+            var wishlistItemData = data;            
+
+            if (data.length === 0) {
+                callback('No matching wishlist items were found.');
+            } else if (data.length === 1) {
+                //transform wishlist item data into a WishlistItem object
+                var wishlist_id = wishlistItemData[0].wishlist_id;
+                var name = wishlistItemData[0].name;
+                var price = wishlistItemData[0].price;
+                var item_url = wishlistItemData[0].item_url;
+                var image_url = wishlistItemData[0].image_url;
+                var is_purchased = wishlistItemData[0].is_purchased;
+
+                var wishlistItem = new WishlistItem(wishlist_id, name, price, item_url, image_url, is_purchased);
+
+                callback(null, wishlistItem);
+            } else {
+                callback('The database did not return the expected number of results.');
+            }
+        } else {
+            callback(err);
+        }
+    });
+}
+
 module.exports = WishlistItem;
+module.exports.getWishlistItem = getWishlistItem;

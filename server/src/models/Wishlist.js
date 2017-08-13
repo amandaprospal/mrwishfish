@@ -95,7 +95,6 @@ class Wishlist {
     }
 }
 
-
 /**
  * Retrieves a wishlist by its id.
  * 

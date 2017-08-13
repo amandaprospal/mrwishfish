@@ -63,7 +63,6 @@ wishlistController.createWishlist = function (req, res) {
     return;
 };
 
-
 /**
  * Retrieves a specific wishlist by its id.
  * 
