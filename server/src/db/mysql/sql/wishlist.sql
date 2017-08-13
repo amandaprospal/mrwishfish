@@ -48,6 +48,29 @@ CREATE TABLE IF NOT EXISTS `wishlist`.`wishlist` (
 ENGINE = InnoDB;
 
 
+-- -----------------------------------------------------
+-- Table `wishlist`.`wishlist_item`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `wishlist`.`wishlist_item` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `wishlist_id` INT NOT NULL,
+  `name` VARCHAR(128) NOT NULL,
+  `price` DECIMAL(2) NULL,
+  `item_url` BLOB NULL,
+  `image_url` BLOB NULL,
+  `is_purchased` TINYINT(1) NULL,
+  `date_created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `date_updated` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  INDEX `fk_wishlist_item_wishlist1_idx` (`wishlist_id` ASC),
+  CONSTRAINT `fk_wishlist_item_wishlist1`
+    FOREIGN KEY (`wishlist_id`)
+    REFERENCES `wishlist`.`wishlist` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
