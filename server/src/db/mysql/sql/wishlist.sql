@@ -28,6 +28,26 @@ CREATE TABLE IF NOT EXISTS `wishlist`.`user` (
 ENGINE = InnoDB;
 
 
+-- -----------------------------------------------------
+-- Table `wishlist`.`wishlist`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `wishlist`.`wishlist` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `user_id` INT NOT NULL,
+  `name` VARCHAR(45) NOT NULL,
+  `is_private` TINYINT(1) NOT NULL,
+  `date_created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `date_updated` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  INDEX `fk_wishlist_user_idx` (`user_id` ASC),
+  CONSTRAINT `fk_wishlist_user`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `wishlist`.`user` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
