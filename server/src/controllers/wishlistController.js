@@ -63,4 +63,36 @@ wishlistController.createWishlist = function (req, res) {
     return;
 };
 
+
+/**
+ * Retrieves a specific wishlist by its id.
+ * 
+ * @param {Object} req The Express request object.
+ * @param {String} req.id The wishlist id.
+ * @param {Object} res The Express response object.
+ * 
+ * @return 200 if wishlist was retrieved successfully.
+ *         500 if an error occurred.
+ */
+wishlistController.getWishlist = function (req, res) {
+    console.log('Entered wishlistController.getWishlist()');
+
+    var wishlistId = req.params.id;
+
+    console.log('Received the following wishlist id: ' + wishlistId);
+
+    Wishlist.getWishlist(wishlistId, function processGetWishlistResults(err, wishlist) {
+        if (err) {
+            res.status(500).json({
+                message: err
+            });
+        } else {
+            res.status(200).json({
+                message: 'Successfully retrieved a matching wishlist.',
+                wishlist: wishlist
+            });
+        }
+    });
+};
+
 module.exports = wishlistController;
