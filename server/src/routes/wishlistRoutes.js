@@ -1,13 +1,27 @@
 'use strict';
 
 var express = require('express');
-var router = new express.Router();
 var wishlistController = require('../controllers/wishlistController.js');
+var wishlistItemController = require('../controllers/wishlistItemController.js');
+
+var wishListRouter = new express.Router();
+var wishlistItemRouter = new express.Router({
+    mergeParams: true
+});
+
+wishListRouter.use('/:wishlistId/items', wishlistItemRouter);
 
 // Create a wishlist
-router.post('/', wishlistController.createWishlist);
+wishListRouter.post('/', wishlistController.createWishlist);
 
 // Retrieve a wishlist
-router.get('/:id', wishlistController.getWishlist);
+wishListRouter.get('/:wishlistId', wishlistController.getWishlist);
 
-module.exports = router;
+
+// Create a wishlist item
+wishlistItemRouter.post('/', wishlistItemController.createWishlistItem);
+
+// Retrieve a wishlist item
+wishlistItemRouter.get('/:itemId', wishlistItemController.getWishlistItem);
+
+module.exports = wishListRouter;

@@ -8,12 +8,12 @@ var wishlistItemController = {};
  * Creates a wishlist item.
  * 
  * @param {Object} req The Express request object.
- * @param {Number} req.wishlist_id The id of the wishlist this wishlist item belongs to.
- * @param {String} req.name The name of the wishlist item.
- * @param {Number} req.price The price of the wishlist item.
- * @param {String} req.item_url The URL to the website of the wishlist item.
- * @param {String} req.image_url The URL to the image of the wishlist item.
- * @param {Boolean} req.is_purchased Whether the wishlist item has been purchased.
+ * @param {Number} req.params.wishlist_id The id of the wishlist this wishlist item belongs to.
+ * @param {String} req.body.name The name of the wishlist item.
+ * @param {Number} req.body.price The price of the wishlist item.
+ * @param {String} req.body.item_url The URL to the website of the wishlist item.
+ * @param {String} req.body.image_url The URL to the image of the wishlist item.
+ * @param {Boolean} req.body.is_purchased Whether the wishlist item has been purchased.
  * @param {Object} res The Express response object.
  * 
  * @return 200 if wishlist item was created successfully.
@@ -22,7 +22,7 @@ var wishlistItemController = {};
 wishlistItemController.createWishlistItem = function (req, res) {
     console.log('Entered wishlistItemController.createWishlistItem()');
 
-    var wishlist_id = req.body.wishlist_id;
+    var wishlist_id = req.params.wishlistId;
     console.log('Wishlist ID: ' + wishlist_id);
     if (wishlist_id === undefined) {
         res.status(500).json({
@@ -66,7 +66,8 @@ wishlistItemController.createWishlistItem = function (req, res) {
  * Retrieves a specific wishlist item by its id.
  * 
  * @param {Object} req The Express request object.
- * @param {String} req.id The wishlist item id.
+ * @param {String} req.params.wishlistId The wishlist id.
+ * @param {String} req.params.itemId The wishlist item id.
  * @param {Object} res The Express response object.
  * 
  * @return 200 if wishlist item was retrieved successfully.
@@ -75,8 +76,10 @@ wishlistItemController.createWishlistItem = function (req, res) {
 wishlistItemController.getWishlistItem = function (req, res) {
     console.log('Entered wishlistItemController.getWishlistItem()');
 
-    var wishlistItemId = req.params.id;
+    var wishlistId = req.params.wishlistId;
+    var wishlistItemId = req.params.itemId;
 
+    console.log('Received the following wishlist id: ' + wishlistId);
     console.log('Received the following wishlist item id: ' + wishlistItemId);
 
     WishlistItem.getWishlistItem(wishlistItemId, function processGetWishlistItemResults(err, wishlistItem) {

@@ -15,9 +15,8 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 // Set up routes
-app.use('/user', require('./src/routes/userRoutes.js'));
-app.use('/wishlist', require('./src/routes/wishlistRoutes.js'));
-app.use('/wishlistItem', require('./src/routes/wishlistItemRoutes.js'));
+app.use('/users', require('./src/routes/userRoutes.js'));
+app.use('/wishlists', require('./src/routes/wishlistRoutes.js'));
 
 // Start the server
 app.listen(SERVER_PORT);
