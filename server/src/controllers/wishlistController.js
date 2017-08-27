@@ -8,9 +8,9 @@ var wishlistController = {};
  * Creates a wishlist.
  * 
  * @param {Object} req The Express request object.
- * @param {String} req.user_id The id of the user who owns the wishlist.
- * @param {String} req.name The name of the wishlist.
- * @param {String} req.isPrivate Whether the wishlist is private.
+ * @param {String} req.body.userId The id of the user who owns the wishlist.
+ * @param {String} req.body.name The name of the wishlist.
+ * @param {String} req.body.isPrivate Whether the wishlist is private.
  * @param {Object} res The Express response object.
  * 
  * @return 200 if wishlist was created successfully.
@@ -19,11 +19,11 @@ var wishlistController = {};
 wishlistController.createWishlist = function (req, res) {
     console.log('Entered wishlistController.createWishlist()');
 
-    var user_id = req.body.user_id;
-    console.log('User ID: ' + user_id);
-    if (user_id === undefined) {
+    var userId = req.body.userId;
+    console.log('User ID: ' + userId);
+    if (userId === undefined) {
         res.status(500).json({
-            message: 'user_id is a required parameter.'
+            message: 'userId is a required parameter.'
         });
         return;
     }
@@ -37,16 +37,16 @@ wishlistController.createWishlist = function (req, res) {
         return;
     }
 
-    var is_private = req.body.is_private;
-    console.log('Is Private: ' + is_private);
-    if (is_private === undefined) {
+    var isPrivate = req.body.isPrivate;
+    console.log('Is Private: ' + isPrivate);
+    if (isPrivate === undefined) {
         res.status(500).json({
-            message: 'is_private is a required parameter.'
+            message: 'isPrivate is a required parameter.'
         });
         return;
     }
 
-    var wishlist = new Wishlist(user_id, name, is_private);
+    var wishlist = new Wishlist(userId, name, isPrivate);
     wishlist.print();
     wishlist.createWishlist(wishlist, function processCreateWishlistResults(err){
         if (err) {

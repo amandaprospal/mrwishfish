@@ -8,12 +8,12 @@ var wishlistItemController = {};
  * Creates a wishlist item.
  * 
  * @param {Object} req The Express request object.
- * @param {Number} req.params.wishlist_id The id of the wishlist this wishlist item belongs to.
+ * @param {Number} req.params.wishlistId The id of the wishlist this wishlist item belongs to.
  * @param {String} req.body.name The name of the wishlist item.
  * @param {Number} req.body.price The price of the wishlist item.
- * @param {String} req.body.item_url The URL to the website of the wishlist item.
- * @param {String} req.body.image_url The URL to the image of the wishlist item.
- * @param {Boolean} req.body.is_purchased Whether the wishlist item has been purchased.
+ * @param {String} req.body.itemUrl The URL to the website of the wishlist item.
+ * @param {String} req.body.imageUrl The URL to the image of the wishlist item.
+ * @param {Boolean} req.body.isPurchase Whether the wishlist item has been purchased.
  * @param {Object} res The Express response object.
  * 
  * @return 200 if wishlist item was created successfully.
@@ -22,11 +22,11 @@ var wishlistItemController = {};
 wishlistItemController.createWishlistItem = function (req, res) {
     console.log('Entered wishlistItemController.createWishlistItem()');
 
-    var wishlist_id = req.params.wishlistId;
-    console.log('Wishlist ID: ' + wishlist_id);
-    if (wishlist_id === undefined) {
+    var wishlistId = req.params.wishlistId;
+    console.log('Wishlist ID: ' + wishlistId);
+    if (wishlistId === undefined) {
         res.status(500).json({
-            message: 'wishlist_id is a required parameter.'
+            message: 'wishlistId is a required parameter.'
         });
         return;
     }
@@ -45,7 +45,7 @@ wishlistItemController.createWishlistItem = function (req, res) {
         return;
     }
 
-    var wishlistItem = new WishlistItem(wishlist_id, name);
+    var wishlistItem = new WishlistItem(wishlistId, name);
     wishlistItem.print();
     wishlistItem.createWishlistItem(wishlistItem, function processCreateWishlistItemResults(err){
         if (err) {
