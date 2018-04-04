@@ -1,5 +1,6 @@
 'use strict';
 
+var config = require('../../../config/config.js');
 var mysql = require('mysql');
 
 /**
@@ -11,10 +12,11 @@ class DAL {
      */
     constructor() {
         this._connectionPool = mysql.createPool({
-            host: "localhost",
-            user: "root",
-            password: "",
-            database: "wishlist"
+            host: config.database.url,
+            port: config.database.port,
+            user: config.database.user,
+            password: config.database.password,
+            database: config.database.name
         });
     }
 

@@ -1,10 +1,15 @@
 var config = {};
-config.server = {};
-config.database = {};
 
+// Server
+config.server = {};
 config.server.port = 8080;
 
-config.database.url = "http://localhost";
+// Database
+config.database = {};
+config.database.url = '127.0.0.1';
 config.database.port = 3306;
+config.database.user = 'root';
+config.database.password = '';
+config.database.name = 'wishlist';
 
 module.exports = config;
