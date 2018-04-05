@@ -9,59 +9,59 @@ var wishlistServer = require('../../server');
 
 chai.use(chaiHttp);
 
-describe("User Controller", function() {
-    describe("#createUser()", function() {
-        it("should create a new user", function (done) {
-            var user = {
-                firstName: "Test",
-                lastName: "Bunny",
-                emailAddress: "testbunny@wishlist.com"
+describe("Wishlist Controller", function() {
+    describe("#createWishlist()", function() {
+        it("should create a new wishlist", function (done) {
+            var wishlist = {
+                userId: 1,
+                name: "Bunny's Wishlist",
+                isPrivate: 1
             };
             chai.request(wishlistServer)
-                .post('/users')
-                .send(user)
+                .post('/wishlists')
+                .send(wishlist)
                 .end( function (err, res) {
                     res.should.have.status(200);
                 done();
             });
         });
 
-        it("should not create a new user without a first name", function (done) {
-            var user = {
-                lastName: "Bunny",
-                emailAddress: "testbunny@wishlist.com"
+        it("should not create a new wishlist without a user id", function (done) {
+            var wishlist = {
+                name: "Bunny's Wishlist",
+                isPrivate: 1
             };
             chai.request(wishlistServer)
-                .post('/users')
-                .send(user)
+                .post('/wishlists')
+                .send(wishlist)
                 .end( function (err, res) {
                     res.should.have.status(500);
                 done();
             });
         });
 
-        it("should not create a new user without a last name", function (done) {
-            var user = {
-                firstName: "Test",
-                emailAddress: "testbunny@wishlist.com"
+        it("should not create a new wishlist without a name", function (done) {
+            var wishlist = {
+                userId: 1,
+                isPrivate: 1
             };
             chai.request(wishlistServer)
-                .post('/users')
-                .send(user)
+                .post('/wishlists')
+                .send(wishlist)
                 .end( function (err, res) {
                     res.should.have.status(500);
                 done();
             });
         });
 
-        it("should not create a new user without an email address", function (done) {
-            var user = {
-                firstName: "Test",
-                lastName: "Bunny"
+        it("should not create a new wishlist without a privacy indicator", function (done) {
+            var wishlist = {
+                userId: 1,
+                name: "Bunny's Wishlist"
             };
             chai.request(wishlistServer)
-                .post('/users')
-                .send(user)
+                .post('/wishlists')
+                .send(wishlist)
                 .end( function (err, res) {
                     res.should.have.status(500);
                 done();
