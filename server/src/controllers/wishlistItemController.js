@@ -45,7 +45,16 @@ wishlistItemController.createWishlistItem = function (req, res) {
         return;
     }
 
-    var wishlistItem = new WishlistItem(wishlistId, name);
+    var price = req.body.price;
+    console.log('Price: ' + price);
+    if (price === undefined) {
+        res.status(500).json({
+            message: 'price is a required parameter.'
+        });
+        return;
+    }
+
+    var wishlistItem = new WishlistItem(wishlistId, name, price);
     wishlistItem.print();
     wishlistItem.createWishlistItem(wishlistItem, function processCreateWishlistItemResults(err){
         if (err) {

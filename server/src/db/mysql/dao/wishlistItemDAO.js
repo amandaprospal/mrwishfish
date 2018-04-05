@@ -28,12 +28,13 @@ function createWishlistItem(wishlistItem, callback) {
 
     db.getConnection(function (connectionError, connection) {
         if (!connectionError) {
-            var query = 'INSERT INTO wishlist_item (wishlist_id, name, price, item_url, image_url, is_purchased) VALUES (?, ?, ?, ?, ?, ?);';
-            var values = [wishlistId, name, price, itemUrl, imageUrl, isPurchased];
+            var query = 'INSERT INTO wishlist_item (wishlist_id, name, price, item_url, image_url) VALUES (?, ?, ?, ?, ?);';
+            var values = [wishlistId, name, price, itemUrl, imageUrl];
 
             connection.query(query, values, function processQueryResults(queryError, queryResult) {
                 if (!queryError) {
-                    console.log("The query returned the following result: " + queryResult);
+                    console.log("The query returned the following result: ");
+                    console.log(queryResult);
                     callback(null, queryResult);
                 } else {
                     console.log("An error occurred executing the query: " + queryError + queryError.sql);
