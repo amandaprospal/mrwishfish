@@ -13,12 +13,12 @@ describe("User Controller", function() {
     describe("#createUser()", function() {
         it("should create a new user", function (done) {
             var user = {
-                first_name: "Test",
-                last_name: "Bunny",
-                email_address: "testbunny@wishlist.com"
+                firstName: "Test",
+                lastName: "Bunny",
+                emailAddress: "testbunny@wishlist.com"
             }
             chai.request(wishlistServer)
-                .post('/user')
+                .post('/users')
                 .send(user)
                 .end( function (err, res) {
                     res.should.have.status(200);
@@ -28,11 +28,11 @@ describe("User Controller", function() {
 
         it("should not create a new user without a first name", function (done) {
             var user = {
-                last_name: "Bunny",
-                email_address: "testbunny@wishlist.com"
+                lastName: "Bunny",
+                emailAddress: "testbunny@wishlist.com"
             }
             chai.request(wishlistServer)
-                .post('/user')
+                .post('/users')
                 .send(user)
                 .end( function (err, res) {
                     res.should.have.status(500);
@@ -42,11 +42,11 @@ describe("User Controller", function() {
 
         it("should not create a new user without a last name", function (done) {
             var user = {
-                first_name: "Test",
-                email_address: "testbunny@wishlist.com"
+                firstName: "Test",
+                emailAddress: "testbunny@wishlist.com"
             }
             chai.request(wishlistServer)
-                .post('/user')
+                .post('/users')
                 .send(user)
                 .end( function (err, res) {
                     res.should.have.status(500);
@@ -56,11 +56,11 @@ describe("User Controller", function() {
 
         it("should not create a new user without an email address", function (done) {
             var user = {
-                first_name: "Test",
-                last_name: "Bunny"
+                firstName: "Test",
+                lastName: "Bunny"
             }
             chai.request(wishlistServer)
-                .post('/user')
+                .post('/users')
                 .send(user)
                 .end( function (err, res) {
                     res.should.have.status(500);
