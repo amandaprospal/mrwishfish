@@ -1,11 +1,11 @@
 'use strict';
 
-var userDAO = require('../db/mysql/dao/userDAO.js');
+import * as userDAO from '../db/mysql/dao/userDAO.js';
 
 /**
  * Represents a User.
  */
-class User {
+export default class User {
     /**
      * Creates a User.
      * 
@@ -103,7 +103,7 @@ class User {
  * 
  * @return void
  */
-function getUser(userId, callback) {
+export function getUser(userId, callback) {
     userDAO.getUser(userId, function(err, data) {
         if (!err) {
             var userData = data;            
@@ -127,6 +127,3 @@ function getUser(userId, callback) {
         }
     });
 }
-
-module.exports = User;
-module.exports.getUser = getUser;

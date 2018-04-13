@@ -1,6 +1,6 @@
 'use strict';
 
-var Wishlist = require('../models/Wishlist.js');
+import Wishlist, {getWishlist} from '../models/Wishlist.js';
 
 var wishlistController = {};
 
@@ -80,7 +80,7 @@ wishlistController.getWishlist = function (req, res) {
 
     console.log('Received the following wishlist id: ' + wishlistId);
 
-    Wishlist.getWishlist(wishlistId, function processGetWishlistResults(err, wishlist) {
+    getWishlist(wishlistId, function processGetWishlistResults(err, wishlist) {
         if (err) {
             res.status(500).json({
                 message: err

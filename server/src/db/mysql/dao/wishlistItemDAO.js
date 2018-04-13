@@ -1,6 +1,6 @@
 'use strict';
 
-var DAL = require('../DAL.js');
+import DAL from '../DAL.js';
 
 /**
  * Adds a wishlist item to the database.
@@ -10,7 +10,7 @@ var DAL = require('../DAL.js');
  * 
  * @return void
  */
-function createWishlistItem(wishlistItem, callback) {
+export function createWishlistItem(wishlistItem, callback) {
     console.log('Entering wishlistItemDAO.createWishlistItem()');
 
     var dal = new DAL();
@@ -58,7 +58,7 @@ function createWishlistItem(wishlistItem, callback) {
  * 
  * @return void
  */
-function getWishlistItem(id, callback) {
+export function getWishlistItem(id, callback) {
     console.log('Entering wishlistItemDAO.getWishlistItem()');
 
     var dal = new DAL();
@@ -89,6 +89,3 @@ function getWishlistItem(id, callback) {
         }
     });
 }
-
-module.exports.createWishlistItem = createWishlistItem;
-module.exports.getWishlistItem = getWishlistItem;

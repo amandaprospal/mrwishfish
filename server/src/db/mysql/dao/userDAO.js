@@ -1,6 +1,6 @@
 'use strict';
 
-var DAL = require('../DAL.js');
+import DAL from '../DAL.js';
 
 /**
  * Adds a user to the database.
@@ -10,7 +10,7 @@ var DAL = require('../DAL.js');
  * 
  * @return void
  */
-function createUser(user, callback) {
+export function createUser(user, callback) {
     console.log('Entering userDAO.createUser()');
 
     var dal = new DAL();
@@ -54,7 +54,7 @@ function createUser(user, callback) {
  * 
  * @return void
  */
-function getUser(id, callback) {
+export function getUser(id, callback) {
     console.log('Entering userDAO.getUser()');
 
     var dal = new DAL();
@@ -85,6 +85,3 @@ function getUser(id, callback) {
         }
     });
 }
-
-module.exports.createUser = createUser;
-module.exports.getUser = getUser;

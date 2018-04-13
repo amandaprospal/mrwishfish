@@ -6,7 +6,7 @@ var mysql = require('mysql');
 /**
  * Represents the Data Access Layer (DAL).
  */
-class DAL {
+export default class DAL {
     /**
      * Creates a Data Access Layer.
      */
@@ -38,5 +38,3 @@ class DAL {
         this._connectionPool.end();
     }
 }
-
-module.exports = DAL;

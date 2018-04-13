@@ -1,11 +1,11 @@
 'use strict';
 
-var wishlistDAO = require('../db/mysql/dao/wishlistDAO.js');
+import * as wishlistDAO from '../db/mysql/dao/wishlistDAO.js';
 
 /**
  * Represents a Wishlist.
  */
-class Wishlist {
+export default class Wishlist {
     /**
      * Creates a Wishlist.
      * 
@@ -103,7 +103,7 @@ class Wishlist {
  * 
  * @return void
  */
-function getWishlist(wishlistId, callback) {
+export function getWishlist(wishlistId, callback) {
     wishlistDAO.getWishlist(wishlistId, function(err, data) {
         if (!err) {
             var wishlistData = data;            
@@ -127,6 +127,3 @@ function getWishlist(wishlistId, callback) {
         }
     });
 }
-
-module.exports = Wishlist;
-module.exports.getWishlist = getWishlist;

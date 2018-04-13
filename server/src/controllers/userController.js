@@ -1,6 +1,6 @@
 'use strict';
 
-var User = require('../models/User.js');
+import User, {getUser} from '../models/User';
 
 var userController = {};
 
@@ -80,7 +80,7 @@ userController.getUser = function (req, res) {
 
     console.log('Received the following user id: ' + userId);
 
-    User.getUser(userId, function processGetUserResults(err, user) {
+    getUser(userId, function processGetUserResults(err, user) {
         if (err) {
             res.status(500).json({
                 message: err
