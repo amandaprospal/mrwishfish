@@ -1,6 +1,7 @@
 'use strict';
 
 import * as userDAO from '../db/mysql/dao/userDAO.js';
+import Error from '../util/Error.js';
 
 /**
  * Represents a User.
@@ -14,9 +15,21 @@ export default class User {
      * @param {String} emailAddress The user's email address.
      */
     constructor(firstName, lastName, emailAddress) {
+        this.id = null;
         this.firstName = firstName;
         this.lastName = lastName;
         this.emailAddress = emailAddress;
+        this.createdDate = null;
+        this.updatedDate = null;
+    }
+
+    /**
+     * Sets the user's id.
+     * 
+     * @param {Number} id The user's id.
+     */
+    setId(id) {
+        this.id = id;
     }
 
     /**
@@ -72,8 +85,26 @@ export default class User {
         this.emailAddress = emailAddress;
     }
 
+    /**
+     * Sets the user's creation date.
+     * 
+     * @param {Date} createdDate The timestamp of when the user was created.
+     */
+    setCreatedDate(createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    /**
+     * Sets the user's updated date.
+     * 
+     * @param {Date} updatedDate The timestamp of when the user was last updated.
+     */
+    setUpdatedDate(updatedDate) {
+        this.updatedDate = updatedDate;
+    }
+
     toString() {
-        return 'First name: ' + this.firstName + ', Last name: ' + this.lastName + ', Email address: ' + this.emailAddress;
+        return 'ID: ' + this.id + ', First name: ' + this.firstName + ', Last name: ' + this.lastName + ', Email address: ' + this.emailAddress + ', Created Date: ' + this.createdDate + ', Updated Date: ' + this.updatedDate;
     }
 
     print() {
@@ -91,6 +122,7 @@ export default class User {
      * @param {function} callback The function to callback to after this function finishes executing.
      */
     createUser(user, callback) {
+        console.log('Entering User.createUser()');
         userDAO.createUser(user, callback);
     }
 }
@@ -104,25 +136,37 @@ export default class User {
  * @return void
  */
 export function getUser(userId, callback) {
+    console.log('Entering User.getUser()');
     userDAO.getUser(userId, function(error, data) {
         if (!error) {
             var userData = data;            
 
             if (data.length === 0) {
-                callback('No matching users were found.');
+                error = new Error(500, 'No matching users were found.');
+                callback(error);
             } else if (data.length === 1) {
                 //transform user data into a User object
-                var first_name = userData[0].first_name;
-                var last_name = userData[0].last_name;
-                var email_address = userData[0].email_address;
+                userData = userData[0];
+
+                var id = userData.id;
+                var first_name = userData.first_name;
+                var last_name = userData.last_name;
+                var email_address = userData.email_address;
+                var created_date = userData.date_created;
+                var updated_date = userData.date_updated;
 
                 var user = new User(first_name, last_name, email_address);
+                user.setId(id);
+                user.setCreatedDate(created_date);
+                user.setUpdatedDate(updated_date);
 
                 callback(null, user);
             } else {
-                callback('The database did not return the expected number of results.');
+                error = new Error(500, 'The database did not return the expected number of results.');
+                callback(error);
             }
         } else {
+            error = new Error(500, 'Unable to get the requested user.');
             callback(error);
         }
     });
