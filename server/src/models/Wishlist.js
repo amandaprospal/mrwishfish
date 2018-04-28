@@ -1,6 +1,7 @@
 'use strict';
 
 import * as wishlistDAO from '../db/mysql/dao/wishlistDAO.js';
+import Error from '../util/Error.js';
 
 /**
  * Represents a Wishlist.
@@ -14,9 +15,21 @@ export default class Wishlist {
      * @param {Boolean} isPrivate Whether the wishlist is private.
      */
     constructor(userId, name, isPrivate) {
+        this.id = null;
         this.userId = userId;
         this.name = name;
         this.isPrivate = isPrivate;
+        this.createdDate = null;
+        this.updatedDate = null;
+    }
+
+    /**
+     * Sets the user's id.
+     * 
+     * @param {Number} id The user's id.
+     */
+    setId(id) {
+        this.id = id;
     }
 
     /**
@@ -72,8 +85,26 @@ export default class Wishlist {
         this.isPrivate = isPrivate;
     }
 
+    /**
+     * Sets the user's creation date.
+     * 
+     * @param {Date} createdDate The timestamp of when the user was created.
+     */
+    setCreatedDate(createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    /**
+     * Sets the user's updated date.
+     * 
+     * @param {Date} updatedDate The timestamp of when the user was last updated.
+     */
+    setUpdatedDate(updatedDate) {
+        this.updatedDate = updatedDate;
+    }
+
     toString() {
-        return 'Name: ' + this.name + ', User ID: ' + this.userId + ', Is Private: ' + this.isPrivate;
+        return 'ID: ' + this.id + ', Name: ' + this.name + ', User ID: ' + this.userId + ', Is Private: ' + this.isPrivate + ', Created Date: ' + this.createdDate + ', Updated Date: ' + this.updatedDate;
     }
 
     print() {
@@ -91,6 +122,7 @@ export default class Wishlist {
      * @param {function} callback The function to callback to after this function finishes executing.
      */
     createWishlist(wishlist, callback) {
+        console.log('Entering Wishlist.createWishlist()');
         wishlistDAO.createWishlist(wishlist, callback);
     }
 }
@@ -104,26 +136,37 @@ export default class Wishlist {
  * @return void
  */
 export function getWishlist(wishlistId, callback) {
-    wishlistDAO.getWishlist(wishlistId, function(err, data) {
-        if (!err) {
+    wishlistDAO.getWishlist(wishlistId, function(error, data) {
+        if (!error) {
             var wishlistData = data;            
 
             if (data.length === 0) {
-                callback('No matching wishlists were found.');
+                error = new Error(500, 'No matching wishlists were found.');
+                callback(error);
             } else if (data.length === 1) {
                 //transform wishlist data into a Wishlist object
-                var user_id = wishlistData[0].user_id;
-                var name = wishlistData[0].name;
-                var is_private = wishlistData[0].is_private;
+                 wishlistData = wishlistData[0];
+
+                var id = wishlistData.id;
+                var user_id = wishlistData.user_id;
+                var name = wishlistData.name;
+                var is_private = wishlistData.is_private;
+                var created_date = wishlistData.date_created;
+                var updated_date = wishlistData.date_updated;
 
                 var wishlist = new Wishlist(user_id, name, is_private);
+                wishlist.setId(id);
+                wishlist.setCreatedDate(created_date);
+                wishlist.setUpdatedDate(updated_date);
 
                 callback(null, wishlist);
             } else {
-                callback('The database did not return the expected number of results.');
+                error = new Error(500, 'The database did not return the expected number of results.');
+                callback(error);
             }
         } else {
-            callback(err);
+            error = new Error(500, 'Unable to get the requested wishlist.');
+            callback(error);
         }
     });
 }
