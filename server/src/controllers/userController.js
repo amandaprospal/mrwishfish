@@ -48,10 +48,10 @@ userController.createUser = function (req, res) {
 
     var user = new User(firstName, lastName, emailAddress);
     user.print();
-    user.createUser(user, function processCreateUserResults(err){
-        if (err) {
-            res.status(500).json({
-                message: 'A database error occurred.'
+    user.createUser(user, function processCreateUserResults(error){
+        if (error) {
+            res.status(error.statusCode).json({
+                error
             });
         } else {
             res.status(200).json({
@@ -80,15 +80,14 @@ userController.getUser = function (req, res) {
 
     console.log('Received the following user id: ' + userId);
 
-    getUser(userId, function processGetUserResults(err, user) {
-        if (err) {
-            res.status(500).json({
-                message: err
+    getUser(userId, function processGetUserResults(error, user) {
+        if (error) {
+            res.status(error.statusCode).json({
+                error
             });
         } else {
             res.status(200).json({
-                message: 'Successfully retrieved a matching user.',
-                user: user
+                user
             });
         }
     });

@@ -104,8 +104,8 @@ export default class User {
  * @return void
  */
 export function getUser(userId, callback) {
-    userDAO.getUser(userId, function(err, data) {
-        if (!err) {
+    userDAO.getUser(userId, function(error, data) {
+        if (!error) {
             var userData = data;            
 
             if (data.length === 0) {
@@ -123,7 +123,7 @@ export function getUser(userId, callback) {
                 callback('The database did not return the expected number of results.');
             }
         } else {
-            callback(err);
+            callback(error);
         }
     });
 }

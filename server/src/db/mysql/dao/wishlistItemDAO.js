@@ -1,6 +1,7 @@
 'use strict';
 
 import DAL from '../DAL.js';
+import Error from '../../../util/Error.js';
 
 /**
  * Adds a wishlist item to the database.
@@ -38,14 +39,16 @@ export function createWishlistItem(wishlistItem, callback) {
                     callback(null, queryResult);
                 } else {
                     console.log("An error occurred executing the query: " + queryError + queryError.sql);
-                    callback(queryError);
+                    var error = new Error(503, "Unable to execute database query.");
+                    callback(error);
                 }
                 console.log("Closing database connection.");
                 connection.release();
             });
         } else {
             console.log("There was a problem connecting to the database: " + connectionError);
-            callback(connectionError);
+            var error = new Error(503, "Unable to connect to the database.");
+            callback(error);
         }
     });
 }
@@ -78,14 +81,16 @@ export function getWishlistItem(id, callback) {
                     callback(null, queryResult);
                 } else {
                     console.log("An error occurred executing the query: " + queryError);
-                    callback(queryError);
+                    var error = new Error(503, "Unable to execute database query.");
+                    callback(error);
                 }
                 console.log("Closing database connection.");
                 connection.release();
             });
         } else {
             console.log("There was a problem connecting to the database: " + connectionError);
-            callback(connectionError);
+            var error = new Error(503, "Unable to connect to the database.");
+            callback(error);
         }
     });
 }

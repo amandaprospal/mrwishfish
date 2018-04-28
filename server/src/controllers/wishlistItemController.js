@@ -56,10 +56,10 @@ wishlistItemController.createWishlistItem = function (req, res) {
 
     var wishlistItem = new WishlistItem(wishlistId, name, price);
     wishlistItem.print();
-    wishlistItem.createWishlistItem(wishlistItem, function processCreateWishlistItemResults(err){
-        if (err) {
-            res.status(500).json({
-                message: 'A database error occurred.'
+    wishlistItem.createWishlistItem(wishlistItem, function processCreateWishlistItemResults(error){
+        if (error) {
+            res.status(error.statusCode).json({
+                error
             });
         } else {
             res.status(200).json({
@@ -91,15 +91,14 @@ wishlistItemController.getWishlistItem = function (req, res) {
     console.log('Received the following wishlist id: ' + wishlistId);
     console.log('Received the following wishlist item id: ' + wishlistItemId);
 
-    getWishlistItem(wishlistItemId, function processGetWishlistItemResults(err, wishlistItem) {
-        if (err) {
-            res.status(500).json({
-                message: err
+    getWishlistItem(wishlistItemId, function processGetWishlistItemResults(error, wishlistItem) {
+        if (error) {
+            res.status(error.statusCode).json({
+                error
             });
         } else {
             res.status(200).json({
-                message: 'Successfully retrieved a matching wishlist item.',
-                wishlistItem: wishlistItem
+                wishlistItem
             });
         }
     });
