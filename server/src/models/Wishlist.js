@@ -24,9 +24,9 @@ export default class Wishlist {
     }
 
     /**
-     * Sets the user's id.
+     * Sets the wishlist's id.
      * 
-     * @param {Number} id The user's id.
+     * @param {Number} id The wishlist's id.
      */
     setId(id) {
         this.id = id;
@@ -86,18 +86,18 @@ export default class Wishlist {
     }
 
     /**
-     * Sets the user's creation date.
+     * Sets the wishlist's creation date.
      * 
-     * @param {Date} createdDate The timestamp of when the user was created.
+     * @param {Date} createdDate The timestamp of when the wishlist was created.
      */
     setCreatedDate(createdDate) {
         this.createdDate = createdDate;
     }
 
     /**
-     * Sets the user's updated date.
+     * Sets the wishlist's updated date.
      * 
-     * @param {Date} updatedDate The timestamp of when the user was last updated.
+     * @param {Date} updatedDate The timestamp of when the wishlist was last updated.
      */
     setUpdatedDate(updatedDate) {
         this.updatedDate = updatedDate;
