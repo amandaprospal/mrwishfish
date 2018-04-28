@@ -48,14 +48,22 @@ wishlistController.createWishlist = function (req, res) {
 
     var wishlist = new Wishlist(userId, name, isPrivate);
     wishlist.print();
-    wishlist.createWishlist(wishlist, function processCreateWishlistResults(error){
+    wishlist.createWishlist(wishlist, function processCreateWishlistResults(error, results){
         if (error) {
             res.status(error.statusCode).json({
                 error
             });
         } else {
-            res.status(200).json({
-                message: 'The wishlist was created successfully.'
+            getWishlist(results.insertId, function processGetWishlistResults(error, wishlist) {
+                if (error) {
+                    res.status(error.statusCode).json({
+                        error
+                    });
+                } else {
+                    res.status(201).json({
+                        wishlist
+                    });
+                }
             });
         }
     });
