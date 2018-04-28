@@ -1,6 +1,7 @@
 'use strict';
 
 import * as wishlistItemDAO from '../db/mysql/dao/wishlistItemDAO.js';
+import Error from '../util/Error.js';
 
 /**
  * Represents a Wishlist Item.
@@ -17,12 +18,23 @@ export default class WishlistItem {
      * @param {Boolean} isPurchased Whether the wishlist item has been purchased.
      */
     constructor(wishlistId, name, price, itemUrl, imageUrl, isPurchased) {
+        this.id = null;
         this.wishlistId = wishlistId;
         this.name = name;
         this.price = price;
         this.itemUrl = itemUrl;
         this.imageUrl = imageUrl;
         this.isPurchased = isPurchased;
+        this.createdDate = null;
+        this.updatedDate = null;
+    }
+    /**
+     * Sets the wishlist item's id.
+     * 
+     * @param {Number} id The wishlist item's id.
+     */
+    setId(id) {
+        this.id = id;
     }
 
     /**
@@ -132,8 +144,26 @@ export default class WishlistItem {
         this.isPurchased = isPurchased;
     }
 
+    /**
+     * Sets the wishlist item's creation date.
+     * 
+     * @param {Date} createdDate The timestamp of when the wishlist item was created.
+     */
+    setCreatedDate(createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    /**
+     * Sets the wishlist item's updated date.
+     * 
+     * @param {Date} updatedDate The timestamp of when the wishlist item was last updated.
+     */
+    setUpdatedDate(updatedDate) {
+        this.updatedDate = updatedDate;
+    }
+
     toString() {
-        return 'Wishlist ID: ' + this.wishlistId + ', Name: ' + this.name + ', Price: ' + this.price + ', Item URL: ' + this.itemUrl + ', Image URL: ' + this.imageUrl + ', Is Purchased: ' + this.isPurchased;
+        return 'ID: ' + this.id + ', Wishlist ID: ' + this.wishlistId + ', Name: ' + this.name + ', Price: ' + this.price + ', Item URL: ' + this.itemUrl + ', Image URL: ' + this.imageUrl + ', Is Purchased: ' + this.isPurchased + ', Created Date: ' + this.createdDate + ', Updated Date: ' + this.updatedDate;
     }
 
     print() {
@@ -151,6 +181,7 @@ export default class WishlistItem {
      * @param {function} callback The function to callback to after this function finishes executing.
      */
     createWishlistItem(wishlistItem, callback) {
+        console.log('Entering Wishlist.createWishlistItem()');
         wishlistItemDAO.createWishlistItem(wishlistItem, callback);
     }
 }
@@ -164,29 +195,40 @@ export default class WishlistItem {
  * @return void
  */
 export function getWishlistItem(wishlistItemId, callback) {
-    wishlistItemDAO.getWishlistItem(wishlistItemId, function(err, data) {
-        if (!err) {
+    wishlistItemDAO.getWishlistItem(wishlistItemId, function(error, data) {
+        if (!error) {
             var wishlistItemData = data;            
 
             if (data.length === 0) {
-                callback('No matching wishlist items were found.');
+                error = new Error(500, 'No matching wishlist items were found.');
+                callback(error);
             } else if (data.length === 1) {
                 //transform wishlist item data into a WishlistItem object
-                var wishlist_id = wishlistItemData[0].wishlist_id;
-                var name = wishlistItemData[0].name;
-                var price = wishlistItemData[0].price;
-                var item_url = wishlistItemData[0].item_url;
-                var image_url = wishlistItemData[0].image_url;
-                var is_purchased = wishlistItemData[0].is_purchased;
+                wishlistItemData = wishlistItemData[0];
+
+                var id = wishlistItemData.id;
+                var wishlist_id = wishlistItemData.wishlist_id;
+                var name = wishlistItemData.name;
+                var price = wishlistItemData.price;
+                var item_url = wishlistItemData.item_url;
+                var image_url = wishlistItemData.image_url;
+                var is_purchased = wishlistItemData.is_purchased;
+                var created_date = wishlistItemData.date_created;
+                var updated_date = wishlistItemData.date_updated;
 
                 var wishlistItem = new WishlistItem(wishlist_id, name, price, item_url, image_url, is_purchased);
+                wishlistItem.setId(id);
+                wishlistItem.setCreatedDate(created_date);
+                wishlistItem.setUpdatedDate(updated_date);
 
                 callback(null, wishlistItem);
             } else {
-                callback('The database did not return the expected number of results.');
+                error = new Error(500, 'The database did not return the expected number of results.');
+                callback(error);
             }
         } else {
-            callback(err);
+            error = new Error(500, 'Unable to get the requested wishlist item.');
+            callback(error);
         }
     });
 }
