@@ -181,7 +181,7 @@ export default class WishlistItem {
      * @param {function} callback The function to callback to after this function finishes executing.
      */
     createWishlistItem(wishlistItem, callback) {
-        console.log('Entering Wishlist.createWishlistItem()');
+        console.log('Entering WishlistItem.createWishlistItem()');
         wishlistItemDAO.createWishlistItem(wishlistItem, callback);
     }
 }

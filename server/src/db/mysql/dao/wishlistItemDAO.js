@@ -29,8 +29,8 @@ export function createWishlistItem(wishlistItem, callback) {
 
     db.getConnection(function (connectionError, connection) {
         if (!connectionError) {
-            var query = 'INSERT INTO wishlist_item (wishlist_id, name, price, item_url, image_url) VALUES (?, ?, ?, ?, ?);';
-            var values = [wishlistId, name, price, itemUrl, imageUrl];
+            var query = 'INSERT INTO wishlist_item (wishlist_id, name, price, item_url, image_url, is_purchased) VALUES (?, ?, ?, ?, ?, ?);';
+            var values = [wishlistId, name, price, itemUrl, imageUrl, isPurchased];
 
             connection.query(query, values, function processQueryResults(queryError, queryResult) {
                 if (!queryError) {

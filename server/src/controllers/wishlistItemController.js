@@ -13,7 +13,7 @@ var wishlistItemController = {};
  * @param {Number} req.body.price The price of the wishlist item.
  * @param {String} req.body.itemUrl The URL to the website of the wishlist item.
  * @param {String} req.body.imageUrl The URL to the image of the wishlist item.
- * @param {Boolean} req.body.isPurchase Whether the wishlist item has been purchased.
+ * @param {Boolean} req.body.isPurchased Whether the wishlist item has been purchased.
  * @param {Object} res The Express response object.
  * 
  * @return 200 if wishlist item was created successfully.
@@ -54,16 +54,28 @@ wishlistItemController.createWishlistItem = function (req, res) {
         return;
     }
 
-    var wishlistItem = new WishlistItem(wishlistId, name, price);
+    var itemUrl = req.body.itemUrl;
+    var imageUrl = req.body.imageUrl;
+    var isPurchased = req.body.isPurchased;
+
+    var wishlistItem = new WishlistItem(wishlistId, name, price, itemUrl, imageUrl, isPurchased);
     wishlistItem.print();
-    wishlistItem.createWishlistItem(wishlistItem, function processCreateWishlistItemResults(error){
+    wishlistItem.createWishlistItem(wishlistItem, function processCreateWishlistItemResults(error, results){
         if (error) {
             res.status(error.statusCode).json({
                 error
             });
         } else {
-            res.status(200).json({
-                message: 'The wishlist item was created successfully.'
+            getWishlistItem(results.insertId, function processGetWishlistItemResults(error, wishlistItem) {
+                if (error) {
+                    res.status(error.statusCode).json({
+                        error
+                    });
+                } else {
+                    res.status(201).json({
+                        wishlistItem
+                    });
+                }
             });
         }
     });
