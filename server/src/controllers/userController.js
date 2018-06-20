@@ -2,15 +2,16 @@
 
 import User, {getUser} from '../models/User';
 
+/** @namespace */
 var userController = {};
 
 /**
  * Creates a new user.
  * 
  * @param {Object} req The Express request object.
- * @param {String} req.body.firstName The user's first name.
- * @param {String} req.body.lastName The user's last name.
- * @param {String} req.body.emailAddress The user's email address.
+ * @param {string} req.body.firstName The user's first name.
+ * @param {string} req.body.lastName The user's last name.
+ * @param {string} req.body.emailAddress The user's email address.
  * @param {Object} res The Express response object.
  * 
  * @return 200 if user was created successfully.
@@ -75,7 +76,7 @@ userController.createUser = function (req, res) {
  * Retrieves a specific user by their user id.
  * 
  * @param {Object} req The Express request object.
- * @param {String} req.id The user's id.
+ * @param {string} req.id The user's id.
  * @param {Object} res The Express response object.
  * 
  * @return 200 if user was retrieved successfully.

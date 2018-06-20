@@ -52,7 +52,7 @@ export function createUser(user, callback) {
 /**
  * Retrieves a user from the database.
  * 
- * @param {String} id The user's id.
+ * @param {string} id The user's id.
  * @param {function} callback The function to callback to after this function finishes executing.
  * 
  * @return void

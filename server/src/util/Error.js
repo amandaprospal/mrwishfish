@@ -5,8 +5,8 @@ export default class Error {
     /**
      * Creates an Error.
      * 
-     * @param {Number} statusCode The HTTP status code.
-     * @param {String} description A description of the error.
+     * @param {number} statusCode The HTTP status code.
+     * @param {string} description A description of the error.
      */
     constructor(statusCode, description) {
         this.statusCode = statusCode;
@@ -16,7 +16,7 @@ export default class Error {
     /**
      * Gets the status code.
      * 
-     * @return {Number} The user's first name.
+     * @return {number} The user's first name.
      */
     getStatusCode() {
         return this.statusCode;
@@ -25,7 +25,7 @@ export default class Error {
     /**
      * Sets the status code.
      * 
-     * @param {Number} statusCode The status code.
+     * @param {number} statusCode The status code.
      */
     setStatusCode(statusCode) {
         this.statusCode = statusCode;
@@ -34,7 +34,7 @@ export default class Error {
     /**
      * Gets the description.
      * 
-     * @return {String} The description.
+     * @return {string} The description.
      */
     getDescription() {
         return this.description;
@@ -43,7 +43,7 @@ export default class Error {
     /**
      * Sets the description.
      * 
-     * @param {String} description The description.
+     * @param {string} description The description.
      */
     setDescription(description) {
         this.description = description;

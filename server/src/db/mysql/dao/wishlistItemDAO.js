@@ -56,7 +56,7 @@ export function createWishlistItem(wishlistItem, callback) {
 /**
  * Retrieves a wishlist item from the database.
  * 
- * @param {Number} id The wishlist item id.
+ * @param {number} id The wishlist item id.
  * @param {function} callback The function to callback to after this function finishes executing.
  * 
  * @return void

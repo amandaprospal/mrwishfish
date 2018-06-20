@@ -10,12 +10,12 @@ export default class WishlistItem {
     /**
      * Creates a Wishlist Item.
      * 
-     * @param {Number} wishlistId The id of the wishlist the wishlist item belongs to.
-     * @param {String} name The name of the wishlist item.
-     * @param {Number} price The price of the wishlist item.
-     * @param {String} itemUrl The URL to the website of the wishlist item.
-     * @param {String} imageUrl The URL to the image of the wishlist item.
-     * @param {Boolean} isPurchased Whether the wishlist item has been purchased.
+     * @param {number} wishlistId The id of the wishlist the wishlist item belongs to.
+     * @param {string} name The name of the wishlist item.
+     * @param {number} price The price of the wishlist item.
+     * @param {string} itemUrl The URL to the website of the wishlist item.
+     * @param {string} imageUrl The URL to the image of the wishlist item.
+     * @param {boolean} isPurchased Whether the wishlist item has been purchased.
      */
     constructor(wishlistId, name, price, itemUrl, imageUrl, isPurchased) {
         this.id = null;
@@ -31,7 +31,7 @@ export default class WishlistItem {
     /**
      * Sets the wishlist item's id.
      * 
-     * @param {Number} id The wishlist item's id.
+     * @param {number} id The wishlist item's id.
      */
     setId(id) {
         this.id = id;
@@ -40,7 +40,7 @@ export default class WishlistItem {
     /**
      * Gets the id of the wishlist the wishlist item belongs to.
      * 
-     * @return {Number} The id of the wishlist the wishlist item belongs to.
+     * @return {number} The id of the wishlist the wishlist item belongs to.
      */
     getWishlistId() {
         return this.wishlistId;
@@ -49,7 +49,7 @@ export default class WishlistItem {
     /**
      * Sets the id of the wishlist the wishlist item belongs to.
      * 
-     * @param {Number} wishlistId The id of the wishlist the wishlist item belongs to.
+     * @param {number} wishlistId The id of the wishlist the wishlist item belongs to.
      */
     setUserId(userId) {
         this.userId = userId;
@@ -58,7 +58,7 @@ export default class WishlistItem {
     /**
      * Gets the name of the wishlist item.
      * 
-     * @return {String} The name of the wishlist item.
+     * @return {string} The name of the wishlist item.
      */
     getName() {
         return this.name;
@@ -67,7 +67,7 @@ export default class WishlistItem {
     /**
      * Sets the name of the wishlist item.
      * 
-     * @param {String} name The name of the wishlist item.
+     * @param {string} name The name of the wishlist item.
      */
     setName(name) {
         this.name = name;
@@ -75,7 +75,7 @@ export default class WishlistItem {
 
     /**
      * Gets the price of the wishlist item.
-     * @return {Number} The price of the wishlist item.
+     * @return {number} The price of the wishlist item.
      */
     getPrice() {
         return this.price;
@@ -84,7 +84,7 @@ export default class WishlistItem {
     /**
      * Sets the price of the wishlist item.
      * 
-     * @param {Number} price The price of the wishlist item.
+     * @param {number} price The price of the wishlist item.
      */
     setPrice(price) {
         this.price = price;
@@ -93,7 +93,7 @@ export default class WishlistItem {
     /**
      * Gets the URL of the wishlist item.
      * 
-     * @return {String} The URL of the wishlist item.
+     * @return {string} The URL of the wishlist item.
      */
     getItemUrl() {
         return this.itemUrl;
@@ -102,7 +102,7 @@ export default class WishlistItem {
     /**
      * Sets the URL of the wishlist item.
      * 
-     * @param {String} itemUrl The URL of the wishlist item.
+     * @param {string} itemUrl The URL of the wishlist item.
      */
     setItemUrl(itemUrl) {
         this.itemUrl = itemUrl;
@@ -111,7 +111,7 @@ export default class WishlistItem {
     /**
      * Gets the image URL of the wishlist item.
      * 
-     * @return {String} The image URL of the wishlist item.
+     * @return {string} The image URL of the wishlist item.
      */
     getImageUrl() {
         return this.imageUrl;
@@ -120,7 +120,7 @@ export default class WishlistItem {
     /**
      * Sets the image URL of the wishlist item.
      * 
-     * @param {String} imageUrl The image URL of the wishlist item.
+     * @param {string} imageUrl The image URL of the wishlist item.
      */
     setImageUrl(imageUrl) {
         this.imageUrl = imageUrl;
@@ -129,7 +129,7 @@ export default class WishlistItem {
     /**
      * Gets the isPurchased flag of the wishlist item.
      * 
-     * @return {Boolean} The isPurchased flag of the wishlist item.
+     * @return {boolean} The isPurchased flag of the wishlist item.
      */
     getIsPurchased() {
         return this.isPurchased;
@@ -138,7 +138,7 @@ export default class WishlistItem {
     /**
      * Sets the isPurchased flag of the wishlist item.
      * 
-     * @param {Boolean} isPurchased The isPurchased flag of the wishlist item.
+     * @param {boolean} isPurchased The isPurchased flag of the wishlist item.
      */
     setIsPurchased(isPurchased) {
         this.isPurchased = isPurchased;
@@ -189,7 +189,7 @@ export default class WishlistItem {
 /**
  * Retrieves a wishlist item by its id.
  * 
- * @param {Number} wishlistItemId The wishlist item id.
+ * @param {number} wishlistItemId The wishlist item id.
  * @param {function} callback The function to callback to after this function finishes executing.
  * 
  * @return void

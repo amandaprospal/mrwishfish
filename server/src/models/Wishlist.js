@@ -10,9 +10,9 @@ export default class Wishlist {
     /**
      * Creates a Wishlist.
      * 
-     * @param {Number} userId The id of the user who owns the wishlist.
-     * @param {String} name The name of the wishlist.
-     * @param {Boolean} isPrivate Whether the wishlist is private.
+     * @param {number} userId The id of the user who owns the wishlist.
+     * @param {string} name The name of the wishlist.
+     * @param {boolean} isPrivate Whether the wishlist is private.
      */
     constructor(userId, name, isPrivate) {
         this.id = null;
@@ -26,7 +26,7 @@ export default class Wishlist {
     /**
      * Sets the wishlist's id.
      * 
-     * @param {Number} id The wishlist's id.
+     * @param {number} id The wishlist's id.
      */
     setId(id) {
         this.id = id;
@@ -35,7 +35,7 @@ export default class Wishlist {
     /**
      * Gets the id of the user who owns the wishlist.
      * 
-     * @return {Number} The id of the user who owns the wishlist.
+     * @return {number} The id of the user who owns the wishlist.
      */
     getUserId() {
         return this.userId;
@@ -44,7 +44,7 @@ export default class Wishlist {
     /**
      * Sets the id of the user who owns the wishlist.
      * 
-     * @param {Number} userId The id of the user who owns the wishlist
+     * @param {number} userId The id of the user who owns the wishlist
      */
     setUserId(userId) {
         this.userId = userId;
@@ -53,7 +53,7 @@ export default class Wishlist {
     /**
      * Gets the name of the wishlist.
      * 
-     * @return {String} The name of the wishlist.
+     * @return {string} The name of the wishlist.
      */
     getName() {
         return this.name;
@@ -62,7 +62,7 @@ export default class Wishlist {
     /**
      * Sets the name of the wishlist.
      * 
-     * @param {String} name The name of the wishlist.
+     * @param {string} name The name of the wishlist.
      */
     setName(name) {
         this.name = name;
@@ -70,7 +70,7 @@ export default class Wishlist {
 
     /**
      * Gets the isPrivate flag of the wishlist.
-     * @return {Boolean} The isPrivate flag of the wishlist.
+     * @return {boolean} The isPrivate flag of the wishlist.
      */
     getIsPrivate() {
         return this.isPrivate;
@@ -79,7 +79,7 @@ export default class Wishlist {
     /**
      * Sets the isPrivate flag of the wishlist.
      * 
-     * @param {Boolean} isPrivate The isPrivate flag of the wishlist.
+     * @param {boolean} isPrivate The isPrivate flag of the wishlist.
      */
     setIsPrivate(isPrivate) {
         this.isPrivate = isPrivate;
@@ -130,7 +130,7 @@ export default class Wishlist {
 /**
  * Retrieves a wishlist by its id.
  * 
- * @param {Number} wishlistId The wishlist id.
+ * @param {number} wishlistId The wishlist id.
  * @param {function} callback The function to callback to after this function finishes executing.
  * 
  * @return void

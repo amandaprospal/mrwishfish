@@ -2,18 +2,19 @@
 
 import WishlistItem, {getWishlistItem} from '../models/WishlistItem.js';
 
+/** @namespace */
 var wishlistItemController = {};
 
 /**
  * Creates a wishlist item.
  * 
  * @param {Object} req The Express request object.
- * @param {Number} req.params.wishlistId The id of the wishlist this wishlist item belongs to.
- * @param {String} req.body.name The name of the wishlist item.
- * @param {Number} req.body.price The price of the wishlist item.
- * @param {String} req.body.itemUrl The URL to the website of the wishlist item.
- * @param {String} req.body.imageUrl The URL to the image of the wishlist item.
- * @param {Boolean} req.body.isPurchased Whether the wishlist item has been purchased.
+ * @param {number} req.params.wishlistId The id of the wishlist this wishlist item belongs to.
+ * @param {string} req.body.name The name of the wishlist item.
+ * @param {number} [req.body.price=null] The price of the wishlist item.
+ * @param {string} req.body.itemUrl The URL to the website of the wishlist item.
+ * @param {string} [req.body.imageUrl=null] The URL to the image of the wishlist item.
+ * @param {boolean} [req.body.isPurchased=0] Whether the wishlist item has been purchased.
  * @param {Object} res The Express response object.
  * 
  * @return 200 if wishlist item was created successfully.
@@ -87,8 +88,8 @@ wishlistItemController.createWishlistItem = function (req, res) {
  * Retrieves a specific wishlist item by its id.
  * 
  * @param {Object} req The Express request object.
- * @param {String} req.params.wishlistId The wishlist id.
- * @param {String} req.params.itemId The wishlist item id.
+ * @param {string} req.params.wishlistId The wishlist id.
+ * @param {string} req.params.itemId The wishlist item id.
  * @param {Object} res The Express response object.
  * 
  * @return 200 if wishlist item was retrieved successfully.

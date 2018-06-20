@@ -2,15 +2,16 @@
 
 import Wishlist, {getWishlist} from '../models/Wishlist.js';
 
+/** @namespace */
 var wishlistController = {};
 
 /**
  * Creates a wishlist.
  * 
  * @param {Object} req The Express request object.
- * @param {String} req.body.userId The id of the user who owns the wishlist.
- * @param {String} req.body.name The name of the wishlist.
- * @param {String} req.body.isPrivate Whether the wishlist is private.
+ * @param {string} req.body.userId The id of the user who owns the wishlist.
+ * @param {string} req.body.name The name of the wishlist.
+ * @param {string} [req.body.isPrivate=0] Whether the wishlist is private.
  * @param {Object} res The Express response object.
  * 
  * @return 200 if wishlist was created successfully.
@@ -75,7 +76,7 @@ wishlistController.createWishlist = function (req, res) {
  * Retrieves a specific wishlist by its id.
  * 
  * @param {Object} req The Express request object.
- * @param {String} req.params.wishlistId The wishlist id.
+ * @param {string} req.params.wishlistId The wishlist id.
  * @param {Object} res The Express response object.
  * 
  * @return 200 if wishlist was retrieved successfully.
