@@ -1,2 +1,5 @@
-# dependencies
+# Ignore everything in docs
+/v1/docs
+
+# Ignore dependencies
 /node_modules
