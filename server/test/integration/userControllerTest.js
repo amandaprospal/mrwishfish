@@ -3,9 +3,10 @@ var chaiHttp = require('chai-http');
 var expect = require('chai').expect;
 var sinon = require('sinon');
 var should = chai.should();
-var userController = require("../../src/controllers/userController.js");
+var userController = require("../../v1/src/controllers/userController.js");
 
 var wishlistServer = require('../../server');
+var endpoint = '/api/v1/users';
 
 chai.use(chaiHttp);
 
@@ -18,7 +19,7 @@ describe("User Controller", function() {
                 emailAddress: "testbunny@wishlist.com"
             };
             chai.request(wishlistServer)
-                .post('/users')
+                .post(endpoint)
                 .send(user)
                 .end( function (err, res) {
                     res.should.have.status(201);
@@ -32,7 +33,7 @@ describe("User Controller", function() {
                 emailAddress: "testbunny@wishlist.com"
             };
             chai.request(wishlistServer)
-                .post('/users')
+                .post(endpoint)
                 .send(user)
                 .end( function (err, res) {
                     res.should.have.status(500);
@@ -46,7 +47,7 @@ describe("User Controller", function() {
                 emailAddress: "testbunny@wishlist.com"
             };
             chai.request(wishlistServer)
-                .post('/users')
+                .post(endpoint)
                 .send(user)
                 .end( function (err, res) {
                     res.should.have.status(500);
@@ -60,7 +61,7 @@ describe("User Controller", function() {
                 lastName: "Bunny"
             };
             chai.request(wishlistServer)
-                .post('/users')
+                .post(endpoint)
                 .send(user)
                 .end( function (err, res) {
                     res.should.have.status(500);

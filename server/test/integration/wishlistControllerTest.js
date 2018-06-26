@@ -3,9 +3,9 @@ var chaiHttp = require('chai-http');
 var expect = require('chai').expect;
 var sinon = require('sinon');
 var should = chai.should();
-var userController = require("../../src/controllers/userController.js");
 
 var wishlistServer = require('../../server');
+var endpoint = '/api/v1/wishlists';
 
 chai.use(chaiHttp);
 
@@ -18,7 +18,7 @@ describe("Wishlist Controller", function() {
                 isPrivate: 1
             };
             chai.request(wishlistServer)
-                .post('/wishlists')
+                .post(endpoint)
                 .send(wishlist)
                 .end( function (err, res) {
                     res.should.have.status(201);
@@ -32,7 +32,7 @@ describe("Wishlist Controller", function() {
                 isPrivate: 1
             };
             chai.request(wishlistServer)
-                .post('/wishlists')
+                .post(endpoint)
                 .send(wishlist)
                 .end( function (err, res) {
                     res.should.have.status(500);
@@ -46,7 +46,7 @@ describe("Wishlist Controller", function() {
                 isPrivate: 1
             };
             chai.request(wishlistServer)
-                .post('/wishlists')
+                .post(endpoint)
                 .send(wishlist)
                 .end( function (err, res) {
                     res.should.have.status(500);
@@ -60,7 +60,7 @@ describe("Wishlist Controller", function() {
                 name: "Bunny's Wishlist"
             };
             chai.request(wishlistServer)
-                .post('/wishlists')
+                .post(endpoint)
                 .send(wishlist)
                 .end( function (err, res) {
                     res.should.have.status(500);

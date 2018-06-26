@@ -26,6 +26,6 @@
   "scripts": {
     "start": "babel-node server.js",
     "test": "./node_modules/.bin/mocha --recursive --compilers js:babel-register",
-    "generate-docs": "./node_modules/.bin/jsdoc --configure ./docs/jsdoc/jsdoc.json --readme ./docs/README.md"
+    "generate-docs": "./node_modules/.bin/jsdoc --configure ./v1/docs/jsdoc/jsdoc.json --readme ./v1/docs/README.md"
   }
 }
