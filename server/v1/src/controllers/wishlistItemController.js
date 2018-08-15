@@ -17,7 +17,7 @@ var wishlistItemController = {};
  * @param {boolean} [req.body.isPurchased=0] Whether the wishlist item has been purchased.
  * @param {Object} res The Express response object.
  * 
- * @return 200 if wishlist item was created successfully.
+ * @return 201 if wishlist item was created successfully.
  *         500 if an error occurred.
  */
 wishlistItemController.createWishlistItem = function (req, res) {

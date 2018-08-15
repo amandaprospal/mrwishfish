@@ -14,7 +14,7 @@ var wishlistController = {};
  * @param {string} [req.body.isPrivate=0] Whether the wishlist is private.
  * @param {Object} res The Express response object.
  * 
- * @return 200 if wishlist was created successfully.
+ * @return 201 if wishlist was created successfully.
  *         500 if an error occurred.
  */
 wishlistController.createWishlist = function (req, res) {

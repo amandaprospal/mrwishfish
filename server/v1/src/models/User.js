@@ -10,15 +10,15 @@ export default class User {
     /**
      * Creates a User.
      * 
+     * @param {number} accountId The user's account id.
      * @param {string} firstName The user's first name.
      * @param {string} lastName The user's last name.
-     * @param {string} emailAddress The user's email address.
      */
-    constructor(firstName, lastName, emailAddress) {
+    constructor(accountId, firstName, lastName, emailAddress) {
         this.id = null;
+        this.accountId = accountId;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.emailAddress = emailAddress;
         this.createdDate = null;
         this.updatedDate = null;
     }
@@ -30,6 +30,24 @@ export default class User {
      */
     setId(id) {
         this.id = id;
+    }
+
+    /**
+     * Gets the user's account id.
+     * 
+     * @return {number} The user's account id.
+     */
+    getAccountId() {
+        return this.accountId;
+    }
+
+    /**
+     * Sets the user's account id.
+     * 
+     * @param {number} accountId The user's account id.
+     */
+    setAccountId(accountId) {
+        this.accountId = accountId;
     }
 
     /**
@@ -69,23 +87,6 @@ export default class User {
     }
 
     /**
-     * Gets the user's email address.
-     * @return {string} The user's email address.
-     */
-    getEmailAddress() {
-        return this.emailAddress;
-    }
-
-    /**
-     * Sets the user's email address.
-     * 
-     * @param {string} emailAddress The user's email address.
-     */
-    setEmailAddress(emailAddress) {
-        this.emailAddress = emailAddress;
-    }
-
-    /**
      * Sets the user's creation date.
      * 
      * @param {Date} createdDate The timestamp of when the user was created.
@@ -104,7 +105,7 @@ export default class User {
     }
 
     toString() {
-        return 'ID: ' + this.id + ', First name: ' + this.firstName + ', Last name: ' + this.lastName + ', Email address: ' + this.emailAddress + ', Created Date: ' + this.createdDate + ', Updated Date: ' + this.updatedDate;
+        return 'ID: ' + this.id + ', Account ID: ' + this.accountId + ', First name: ' + this.firstName + ', Last name: ' + this.lastName + ', Created Date: ' + this.createdDate + ', Updated Date: ' + this.updatedDate;
     }
 
     print() {
@@ -149,13 +150,13 @@ export function getUser(userId, callback) {
                 userData = userData[0];
 
                 var id = userData.id;
+                var account_id = userData.account_id;
                 var first_name = userData.first_name;
                 var last_name = userData.last_name;
-                var email_address = userData.email_address;
                 var created_date = userData.date_created;
                 var updated_date = userData.date_updated;
 
-                var user = new User(first_name, last_name, email_address);
+                var user = new User(account_id, first_name, last_name);
                 user.setId(id);
                 user.setCreatedDate(created_date);
                 user.setUpdatedDate(updated_date);

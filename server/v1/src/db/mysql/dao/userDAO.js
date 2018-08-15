@@ -20,14 +20,14 @@ export function createUser(user, callback) {
     console.log("Attempting to insert the following user into the database: ");
     user.print();
 
+    var accountId = user.getAccountId();
     var firstName = user.getFirstName();
     var lastName = user.getLastName();
-    var emailAddress = user.getEmailAddress();
 
     db.getConnection(function (connectionError, connection) {
         if (!connectionError) {
-            var query = 'INSERT INTO user (first_name, last_name, email_address) VALUES (?, ?, ?);';
-            var values = [firstName, lastName, emailAddress];
+            var query = 'INSERT INTO user (account_id, first_name, last_name) VALUES (?, ?, ?);';
+            var values = [accountId, firstName, lastName];
 
             connection.query(query, values, function processQueryResults(queryError, queryResult) {
                 if (!queryError) {
