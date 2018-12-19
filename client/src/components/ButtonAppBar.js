@@ -1,5 +1,7 @@
 import React from 'react';
 import auth0Client from '../Auth';
+import compose from 'recompose/compose';
+import {Link, withRouter} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -41,11 +43,25 @@ function ButtonAppBar(props) {
           }
           {
             auth0Client.isAuthenticated() &&
-            <Button
+            <div>
+              {auth0Client.getProfile().name}
+              <Button
               color="inherit"
               onClick={() => {signOut()}}>
-              {auth0Client.getProfile().name} Logout
+              Logout
             </Button>
+            </div>
+          }
+          {
+            auth0Client.isAuthenticated() &&
+            <div>
+              <Button
+              color="inherit"
+              component={Link} to="/newwishlist"
+              >
+              New Wishlist
+            </Button>
+            </div>
           }
         </Toolbar>
       </AppBar>
@@ -57,4 +73,6 @@ ButtonAppBar.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(ButtonAppBar);
+export default compose(
+  withStyles(styles)
+)(withRouter(ButtonAppBar));

@@ -2,8 +2,13 @@
 
 const bodyParser = require('body-parser');
 const config = require('./config/config.js');
+const cors = require('cors');
 const express = require('express');
 const expressSession = require('express-session');
+const helmet = require('helmet');
+const jwt = require('express-jwt');
+const jwksRsa = require('jwks-rsa');
+const morgan = require('morgan');
 const RedisStore = require('connect-redis')(expressSession);
 
 const SERVER_PORT = config.server.port;
@@ -11,11 +16,20 @@ const SESSION_SECRET = config.sessions.secret;
 
 let app = express();
 
+// Set up helmet for added security
+app.use(helmet());
+
 // Set up body-parser
 app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(bodyParser.json());
+
+// Set up CORS to manage HTTP headers
+app.use(cors());
+
+// Set up morgan to log HTTP requests
+app.use(morgan('combined'));
 
 // Set up session storage for authorization
 app.use(expressSession({
@@ -24,6 +38,8 @@ app.use(expressSession({
     saveUninitialized: false,
     store: new RedisStore()
 }));
+
+
 
 // Set up routes
 app.use('/api/v1/accounts', require('./v1/src/routes/accountRoutes.js'));

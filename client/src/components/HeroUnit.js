@@ -22,7 +22,7 @@ const styles = theme => ({
         //height: 350
     },
     media: {
-        objectFit: 'cover'
+        
     },
     overlay: {
         position: 'absolute',
@@ -42,7 +42,6 @@ const HeroUnit = (props) => {
                 <CardMedia
                     className={classes.media}
                     component="img"
-                    objectFit="cover"
                     alt="Mr. Wish Fish"
                     image="/static/images/close-up-dandelion-dandelion-seeds-51426.jpg"
                     title="Mr. Wish Fish">
