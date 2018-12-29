@@ -4,3 +4,6 @@
 # IDE configuration
 .vscode/settings.json
 *.code-workspace
+
+# Ignore Redis output files
+*.rdb

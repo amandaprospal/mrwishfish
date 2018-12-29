@@ -6,3 +6,6 @@
 
 # Ignore .env file
 .env
+
+# Ignore Redis output files
+*.rdb
