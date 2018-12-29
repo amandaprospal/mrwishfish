@@ -111,10 +111,6 @@ export default class Wishlist {
         console.log(this.toString());
     }
 
-    getWishlist (callback) {
-        wishlistDAO.getWishlist(callback);
-    }
-
     /**
      * Creates a new wishlist within the system.
      * 
