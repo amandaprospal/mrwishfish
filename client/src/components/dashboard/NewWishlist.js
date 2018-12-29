@@ -1,18 +1,21 @@
 import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom';
 import PropTypes from 'prop-types';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import compose from 'recompose/compose';
-import auth0Client from './Auth';
+import auth0Client from '../../Auth';
 import { withStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 import Paper from '@material-ui/core/Paper';
-import Avatar from '@material-ui/core/Avatar';
+//import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import FormControl from '@material-ui/core/FormControl';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import Button from '@material-ui/core/Button';
+import { Switch } from '@material-ui/core';
+import GiftIcon from '@material-ui/icons/Redeem';
 
 const styles = theme => ({
     main: {
@@ -53,13 +56,20 @@ class NewWishlist extends Component {
 
         this.state = {
             disabled: false,
-            name: ''
+            name: '',
+            isPrivate: false
         };
     }
 
     updateName(value) {
         this.setState({
             name: value
+        });
+    }
+
+    updateIsPrivate(event) {
+        this.setState({
+            isPrivate: event.target.checked
         });
     }
 
@@ -71,7 +81,7 @@ class NewWishlist extends Component {
         await axios.post('http://localhost:8080/api/v1/wishlists/', {
             userId: 1,
             name: this.state.name,
-            isPrivate: false
+            isPrivate: this.state.isPrivate
         }, {
             headers: { 'Authorization': `Bearer ${auth0Client.getIdToken()}` }
         });
@@ -83,32 +93,46 @@ class NewWishlist extends Component {
         const { classes } = this.props;
 
         return (
-            <Paper className={classes.paper}>
-                <Avatar className={classes.avatar}>
-                </Avatar>
-                <Typography component="h1" variant="h5">
-                New Wishlist
-                </Typography>
-                <form className={classes.form}>
-                <FormControl margin="normal" required fullWidth>
-                    <InputLabel>Name</InputLabel>
-                    <Input id="name" name="name" autoFocus />
-                </FormControl>
-                <FormControl margin="normal" required fullWidth>
-                    <InputLabel>Is Private</InputLabel>
-                    <Input name="isPrivate" id="isPrivate" />
-                </FormControl>
-                <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    className={classes.submit}
-                >
-                    Create
-                </Button>
-                </form>
-            </Paper>
+            <main className={classes.main}>
+                <CssBaseline />
+                {/*<Typography variant="h4" gutterBottom component="h2">
+                    Create New Wishlist
+                </Typography>*/}
+                <Paper className={classes.paper}>
+                    {/*<Avatar className={classes.avatar}>
+                    </Avatar>*/}
+                    <GiftIcon />
+                    <Typography component="h1" variant="h5">
+                    Create New Wishlist
+                    </Typography>
+                    <form className={classes.form}>
+                    <FormControl margin="normal" required fullWidth>
+                        <InputLabel>Name</InputLabel>
+                        <Input id="name" name="name" autoFocus onBlur={(e) => {this.updateName(e.target.value)}}/>
+                    </FormControl>
+                    <FormControlLabel
+                        control={
+                            <Switch
+                                checked={this.state.isPrivate}
+                                onChange={(e) => {this.updateIsPrivate(e)}}
+                                value="isPrivate"
+                            />
+                        }
+                        label="This wishlist is private"
+                    />
+                    <Button
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        className={classes.submit}
+                        onClick={() => {this.submit()}}
+                    >
+                        Create Wishlist
+                    </Button>
+                    </form>
+                </Paper>
+            </main>
 
             /*
             <div className="container">

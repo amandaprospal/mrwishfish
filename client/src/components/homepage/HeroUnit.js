@@ -43,12 +43,12 @@ const HeroUnit = (props) => {
                     className={classes.media}
                     component="img"
                     alt="Mr. Wish Fish"
-                    image="/static/images/close-up-dandelion-dandelion-seeds-51426.jpg"
+                    image="/static/images/abstract-art-astronomy-1693095.jpg"
                     title="Mr. Wish Fish">
                 </CardMedia>
                 <CardContent className={classes.overlay}>
                     <Typography variant="h6" align="center" color="textSecondary">
-                        Mr. Wish Fish
+                    Mr. Wish Fish
                     </Typography>
                 </CardContent>
             </Card>

@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import auth0Client from './Auth';
 import Callback from './Callback';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import HeroUnit from './components/HeroUnit';
+import HeroUnit from './components/homepage/HeroUnit';
 import {withRouter, Route} from 'react-router-dom';
-import ButtonAppBar from './components/ButtonAppBar';
-import NewWishlist from './NewWishlist';
-import SecuredRoute from './SecuredRoute';
+import LandingAppBar from './components/homepage/HomePageAppBar';
+import Dashboard from './components/dashboard/Dashboard';
+
 
 class App extends Component {
   constructor(props) {
@@ -35,10 +35,20 @@ class App extends Component {
         <React.Fragment>
           <CssBaseline />
           <div className="App">
-            <ButtonAppBar />
-            {/*<HeroUnit />*/}
+            {
+              !auth0Client.isAuthenticated() &&
+              <div>
+                <LandingAppBar />
+                {/*<HeroUnit />*/}
+              </div>
+            }
+            {
+              auth0Client.isAuthenticated() &&
+              <Dashboard />
+            }
+
             <Route exact path='/callback' component={Callback} />
-            <SecuredRoute path='/newwishlist' component={NewWishlist} checkingSession={this.state.checkingSession}/>
+            
           </div>
         </React.Fragment>
     );
