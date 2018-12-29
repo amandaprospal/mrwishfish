@@ -12,7 +12,7 @@ class Auth {
             domain: '53lunastation.auth0.com',
             audience: 'https://53lunastation.auth0.com/userinfo',
             clientID: 'U0xU6AmmiEkxSRhj1qVG2UgvsJmvYOBt',
-            redirectUri: 'http://localhost:3000/callback',
+            redirectUri: 'http://' + process.env.REACT_APP_DOMAIN + ':3000/callback',
             responseType: 'id_token',
             scope: 'openid profile'
         });
@@ -81,7 +81,7 @@ class Auth {
      */
     signOut() {
     this.auth0.logout({
-        returnTo: 'http://localhost:3000',
+        returnTo: 'http://'+ process.env.REACT_APP_DOMAIN + ':3000',
         clientID: 'U0xU6AmmiEkxSRhj1qVG2UgvsJmvYOBt',
     });
     }

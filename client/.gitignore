@@ -24,3 +24,6 @@ yarn-error.log*
 
 # Ignore Redis output files
 *.rdb
+
+# Ignore .env file
+.env
