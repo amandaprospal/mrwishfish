@@ -1,5 +1,7 @@
 'use strict';
 
+require('dotenv').config();
+
 const bodyParser = require('body-parser');
 const config = require('./config/config.js');
 const cors = require('cors');
@@ -11,7 +13,7 @@ const jwksRsa = require('jwks-rsa');
 const morgan = require('morgan');
 const RedisStore = require('connect-redis')(expressSession);
 
-const SERVER_PORT = config.server.port;
+const SERVER_PORT = process.env.PORT || 8080;
 const SESSION_SECRET = config.sessions.secret;
 
 let app = express();

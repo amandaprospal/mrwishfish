@@ -1,5 +1,7 @@
 'use strict';
 
+require('dotenv').config();
+
 var config = require('../../../../config/config.js');
 var mysql = require('mysql');
 
@@ -12,11 +14,11 @@ export default class DAL {
      */
     constructor() {
         this._connectionPool = mysql.createPool({
-            host: config.database.url,
-            port: config.database.port,
-            user: config.database.user,
-            password: config.database.password,
-            database: config.database.name
+            host: process.env.DB_HOST || '127.0.0.1',
+            port: process.env.DB_PORT || 3306,
+            database: process.env.DB_DATABASE || 'wishlist',
+            user: process.env.DB_USERNAME || '',
+            password: process.env.DB_PASSWORD || ''
         });
     }
 
