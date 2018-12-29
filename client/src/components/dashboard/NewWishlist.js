@@ -78,7 +78,7 @@ class NewWishlist extends Component {
             disabled: true
         });
 
-        await axios.post('http://localhost:8080/api/v1/wishlists/', {
+        await axios.post('http://' + process.env.REACT_APP_DOMAIN + ':8080/api/v1/wishlists/', {
             userId: 1,
             name: this.state.name,
             isPrivate: this.state.isPrivate
