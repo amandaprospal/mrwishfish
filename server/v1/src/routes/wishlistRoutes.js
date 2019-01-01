@@ -26,19 +26,25 @@ var wishlistItemRouter = new express.Router({
     mergeParams: true
 });
 
-wishListRouter.use('/:wishlistId/items', wishlistItemRouter);
-
 // Create a wishlist
 wishListRouter.post('/', checkJwt, wishlistController.createWishlist);
 
 // Retrieve a wishlist
 wishListRouter.get('/:wishlistId', checkJwt, wishlistController.getWishlist);
 
+// Retrieve all wishlists for a specific user
+wishListRouter.get('/:userId/wishlists', checkJwt, wishlistController.getWishlists);
+
+
+// Set up wishlist item router
+wishListRouter.use('/:wishlistId/items', wishlistItemRouter);
 
 // Create a wishlist item
-wishlistItemRouter.post('/', authenticate, wishlistItemController.createWishlistItem);
+wishlistItemRouter.post('/', checkJwt, wishlistItemController.createWishlistItem);
 
 // Retrieve a wishlist item
-wishlistItemRouter.get('/:itemId', authenticate, wishlistItemController.getWishlistItem);
+wishlistItemRouter.get('/:itemId', checkJwt, wishlistItemController.getWishlistItem);
 
+// Retrieve all wishlist items for a specific wishlist
+wishlistItemRouter.get('/', checkJwt, wishlistItemController.getWishlistItems);
 module.exports = wishListRouter;

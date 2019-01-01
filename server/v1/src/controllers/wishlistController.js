@@ -1,6 +1,6 @@
 'use strict';
 
-import Wishlist, {getWishlist} from '../models/Wishlist.js';
+import Wishlist, {getWishlist, getWishlists} from '../models/Wishlist.js';
 
 /** @namespace */
 var wishlistController = {};
@@ -101,5 +101,36 @@ wishlistController.getWishlist = function (req, res) {
         }
     });
 };
+
+/**
+ * Retrieves all wishlists for a specific user.
+ * 
+ * @param {Object} req The Express request object.
+ * @param {string} req.params.userId The user id.
+ * @param {Object} res The Express response object.
+ * 
+ * @return 200 if wishlists were retrieved successfully.
+ *         500 if an error occurred.
+ */
+wishlistController.getWishlists = function (req, res) {
+    console.log('Entered wishlistController.getWishlists()');
+
+    var userId = req.params.userId;
+
+    console.log('Received the following user id: ' + userId);
+
+    getWishlists(userId, function processGetWishlistResults(error, wishlists) {
+        if (error) {
+            res.status(error.statusCode).json({
+                error
+            });
+        } else {
+            res.status(200).json({
+                wishlists
+            });
+        }
+    });
+};
+
 
 module.exports = wishlistController;

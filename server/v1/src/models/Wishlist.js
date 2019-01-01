@@ -166,3 +166,45 @@ export function getWishlist(wishlistId, callback) {
         }
     });
 }
+
+/**
+ * Retrieves all wishlists for a specific user.
+ * 
+ * @param {number} userId The user id.
+ * @param {function} callback The function to callback to after this function finishes executing.
+ * 
+ * @return void
+ */
+export function getWishlists(userId, callback) {
+    wishlistDAO.getWishlists(userId, function(error, data) {
+        if (!error) {
+            var wishlistData = data;            
+            var wishlists = [];
+
+            if (data.length === 0) {
+                callback(null, wishlists);
+            } else {
+                for(var i = 0; i < wishlistData.length; i++) {
+                    //transform wishlist data into a Wishlist object
+                    var id = wishlistData[i].id;
+                    var user_id = wishlistData[i].user_id;
+                    var name = wishlistData[i].name;
+                    var is_private = wishlistData[i].is_private;
+                    var created_date = wishlistData[i].date_created;
+                    var updated_date = wishlistData[i].date_updated;
+    
+                    var wishlist = new Wishlist(user_id, name, is_private);
+                    wishlist.setId(id);
+                    wishlist.setCreatedDate(created_date);
+                    wishlist.setUpdatedDate(updated_date);
+                    wishlists.push(wishlist);
+                }
+                
+                callback(null, wishlists);
+            }
+        } else {
+            error = new Error(500, 'Unable to get the requested wishlists.');
+            callback(error);
+        }
+    });
+}

@@ -15,41 +15,17 @@ CREATE SCHEMA IF NOT EXISTS `wishlist` DEFAULT CHARACTER SET utf8 ;
 USE `wishlist` ;
 
 -- -----------------------------------------------------
--- Table `wishlist`.`account`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `wishlist`.`account` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `username` VARCHAR(256) NOT NULL,
-  `password` VARCHAR(256) NOT NULL,
-  `date_created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `date_updated` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `email_address` VARCHAR(256) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
-  UNIQUE INDEX `username_UNIQUE` (`username` ASC),
-  UNIQUE INDEX `email_address_UNIQUE` (`email_address` ASC))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `wishlist`.`user`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `wishlist`.`user` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `account_id` INT NOT NULL,
-  `first_name` VARCHAR(45) NOT NULL,
+  `first_name` VARCHAR(45) NULL,
   `last_name` VARCHAR(45) NULL,
   `date_created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_updated` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `email_address` VARCHAR(256) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
-  INDEX `account_id_idx` (`account_id` ASC),
-  UNIQUE INDEX `account_id_UNIQUE` (`account_id` ASC),
-  CONSTRAINT `account_id`
-    FOREIGN KEY (`account_id`)
-    REFERENCES `wishlist`.`account` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC))
 ENGINE = InnoDB;
 
 

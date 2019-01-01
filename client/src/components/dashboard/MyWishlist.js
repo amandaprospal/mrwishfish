@@ -6,7 +6,6 @@ import compose from 'recompose/compose';
 import auth0Client from '../../Auth';
 import { withStyles } from '@material-ui/core/styles';
 import axios from 'axios';
-import Typography from '@material-ui/core/Typography';
 import Wishlist from './Wishlist';
 
 const styles = theme => ({
@@ -47,50 +46,46 @@ class MyWishlist extends Component {
         super(props);
 
         this.state = {
-            disabled: false,
-            name: '',
-            isPrivate: false
+            wishlists: []
         };
     }
 
-    updateName(value) {
-        this.setState({
-            name: value
-        });
+    componentDidMount() {
+        this.getWishlists();
     }
 
-    updateIsPrivate(event) {
-        this.setState({
-            isPrivate: event.target.checked
+    getWishlists() {
+        var userId = auth0Client.getUserId();
+        const _this = this;
+        var getWishlistsEndpoint = 'http://' + process.env.REACT_APP_DOMAIN + ':8080/api/v1/wishlists/' + userId + '/wishlists';
+        axios.get(getWishlistsEndpoint, {
+            headers: { 
+                'Authorization': `Bearer ${auth0Client.getIdToken()}`,
+                "accepts": "application/json"
+            }
+        })
+        .then(function (response) {
+            _this.setState({
+                wishlists: response.data.wishlists
+            });
+        })
+        .catch(function (error) {
+            console.log(error);
         });
-    }
-
-    async submit() {
-        this.setState({
-            disabled: true
-        });
-
-        await axios.post('http://localhost:8080/api/v1/wishlists/', {
-            userId: 1,
-            name: this.state.name,
-            isPrivate: this.state.isPrivate
-        }, {
-            headers: { 'Authorization': `Bearer ${auth0Client.getIdToken()}` }
-        });
-
-        this.props.history.push('/');
     }
 
     render() {
         const { classes } = this.props;
+        const { wishlists } = this.state;
 
         return (
             <main className={classes.main}>
                 <CssBaseline />
-                <Typography variant="h4" gutterBottom component="h2">
-                    My Wishlist
-                </Typography>
-                <Wishlist />
+                {
+                    wishlists.map(wishlist => (
+                        <Wishlist key={wishlist.id} wishlistId={wishlist.id} />
+                    ))
+                }
             </main>
         );
     }

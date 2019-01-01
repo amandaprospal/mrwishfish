@@ -90,3 +90,45 @@ export function getWishlist(id, callback) {
         }
     });
 }
+
+/**
+ * Retrieves all wishlists for a specific user from the database.
+ * 
+ * @param {number} id The user id.
+ * @param {function} callback The function to callback to after this function finishes executing.
+ * 
+ * @return void
+ */
+export function getWishlists(id, callback) {
+    console.log('Entering wishlistDAO.getWishlists()');
+
+    var dal = new DAL();
+    var db = dal.getConnectionPool();
+
+    var userId = id;
+    console.log('Searching for the following user id: ' + userId);
+
+    db.getConnection(function (connectionError, connection) {
+        if (!connectionError) {
+            var query = 'SELECT * FROM wishlist WHERE user_id = ?;';
+            var values = [userId];
+
+            connection.query(query, values, function processQueryResults(queryError, queryResult) {
+                if (!queryError) {
+                    console.log("The query returned the following result: " + queryResult);
+                    callback(null, queryResult);
+                } else {
+                    console.log("An error occurred executing the query: " + queryError);
+                    var error = new Error(503, "Unable to execute database query.");
+                    callback(error);
+                }
+                console.log("Closing database connection.");
+                connection.release();
+            });
+        } else {
+            console.log("There was a problem connecting to the database: " + connectionError);
+            var error = new Error(503, "Unable to connect to the database.");
+            callback(error);
+        }
+    });
+}
