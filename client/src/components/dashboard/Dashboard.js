@@ -14,7 +14,7 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import { mainListItems, secondaryListItems } from './sideBarNavListItems';
+import { mainListItems } from './sideBarNavListItems';
 import NavMenu from './NavMenu';
 import NewWishlist from './NewWishlist';
 import MyWishlist from './MyWishlist';
@@ -142,7 +142,7 @@ class Dashboard extends React.Component {
                     noWrap
                     className={classes.title}
                     >
-                    Dashboard
+                    Mr. Wish Fish
                     </Typography>
                     <NavMenu />
                 </Toolbar>
@@ -161,15 +161,13 @@ class Dashboard extends React.Component {
                 </div>
                 <Divider />
                 <List>{mainListItems}</List>
-                <Divider />
-                <List>{secondaryListItems}</List>
                 </Drawer>
                 <main className={classes.content}>
                 <div className={classes.appBarSpacer} />
 
                 <SecuredRoute exact path='/mywishlist' component={MyWishlist} checkingSession={this.state.checkingSession}/>
                 <SecuredRoute exact path='/newwishlist' component={NewWishlist} checkingSession={this.state.checkingSession}/>
-                <SecuredRoute exact path='/newwishlistitem' component={NewWishlistItem} checkingSession={this.state.checkingSession}/>
+                <SecuredRoute exact path='/newwishlistitem/:wishlistId' component={NewWishlistItem} checkingSession={this.state.checkingSession}/>
                 </main>
             </div>
       </HashRouter>
