@@ -39,7 +39,7 @@ class App extends Component {
               !auth0Client.isAuthenticated() &&
               <div>
                 <LandingAppBar />
-                {/*<HeroUnit />*/}
+                {<HeroUnit />}
               </div>
             }
             {
