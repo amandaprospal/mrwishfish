@@ -6,6 +6,8 @@ import HeroUnit from './components/homepage/HeroUnit';
 import {withRouter, Route} from 'react-router-dom';
 import LandingAppBar from './components/homepage/HomePageAppBar';
 import Dashboard from './components/dashboard/Dashboard';
+import MyWishlist from './components/dashboard/MyWishlist';
+import SecuredRoute from './SecuredRoute';
 
 
 class App extends Component {
@@ -48,6 +50,8 @@ class App extends Component {
             }
 
             <Route exact path='/callback' component={Callback} />
+            <SecuredRoute exact path='/mywishlist' component={MyWishlist} checkingSession={this.state.checkingSession}/>
+                
             
           </div>
         </React.Fragment>
