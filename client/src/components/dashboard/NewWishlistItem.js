@@ -45,6 +45,12 @@ const styles = theme => ({
     submit: {
       marginTop: theme.spacing.unit * 3,
     },
+    button: {
+        margin: theme.spacing.unit,
+    },
+    input: {
+        display: 'none',
+    }
   });
 
 class NewWishlistItem extends Component {
@@ -53,10 +59,24 @@ class NewWishlistItem extends Component {
         super(props);
 
         this.state = {
-            disabled: false,
+            wishlist_id: '',
             name: '',
-            isPrivate: false
+            price: '',
+            item_url: '',
+            image_url: '',
+            is_purchased: '',
+            disabled: false
         };
+
+        
+    }
+
+    componentDidMount() {
+        var wishlistId = this.props.match.params.wishlistId;
+        this.setState({
+            wishlist_id: wishlistId,
+            disabled: true
+        });
     }
 
     updateName(value) {
@@ -65,9 +85,22 @@ class NewWishlistItem extends Component {
         });
     }
 
-    updateIsPrivate(event) {
+    updatePrice(value) {
         this.setState({
-            isPrivate: event.target.checked
+            price: value
+        });
+    }
+
+    updateItemUrl(value) {
+        /*const images = value;
+        const formData = new FormData();
+
+        images.forEach((image, i) => {
+            formData.append(i, image);
+        });*/
+
+        this.setState({
+            image_url: value
         });
     }
 
@@ -76,12 +109,16 @@ class NewWishlistItem extends Component {
             disabled: true
         });
 
-        await axios.post('http://localhost:8080/api/v1/wishlists/', {
-            userId: 1,
+        var apiHost = 'http://' + process.env.REACT_APP_DOMAIN + ':8080/api/v1/wishlists/' + this.state.wishlist_id + '/items';
+        await axios.post(apiHost, {
             name: this.state.name,
-            isPrivate: this.state.isPrivate
+            price: this.state.price,
+            itemUrl: this.state.item_url,
+            imageUrl: this.state.images,
+            isPurchase: false
         }, {
-            headers: { 'Authorization': `Bearer ${auth0Client.getIdToken()}` }
+            headers: { 'Authorization': `Bearer ${auth0Client.getIdToken()}`,
+            "accepts": "application/json" }
         });
 
         this.props.history.push('/');
@@ -89,16 +126,11 @@ class NewWishlistItem extends Component {
 
     render() {
         const { classes } = this.props;
-
+        
         return (
             <main className={classes.main}>
                 <CssBaseline />
-                {/*<Typography variant="h4" gutterBottom component="h2">
-                    Create New Wishlist
-                </Typography>*/}
                 <Paper className={classes.paper}>
-                    {/*<Avatar className={classes.avatar}>
-                    </Avatar>*/}
                     <GiftIcon />
                     <Typography component="h1" variant="h5">
                     Add Wishlist Item
@@ -110,16 +142,32 @@ class NewWishlistItem extends Component {
                         <Input id="name" name="name" autoFocus onBlur={(e) => {this.updateName(e.target.value)}}/>
                     </FormControl>
 
-                    <FormControl margin="normal" fullWidth>
-                        <InputLabel>Price</InputLabel>
-                        <Input id="price" name="price" onBlur={(e) => {this.updateName(e.target.value)}}/>
-                    </FormControl>
-
                     <FormControl margin="normal" required fullWidth>
-                        <InputLabel>URL</InputLabel>
-                        <Input id="url" name="url" onBlur={(e) => {this.updateName(e.target.value)}}/>
+                        <InputLabel>Price</InputLabel>
+                        <Input id="price" name="price" onBlur={(e) => {this.updatePrice(e.target.value)}}/>
                     </FormControl>
 
+                    <FormControl margin="normal" fullWidth>
+                        <InputLabel>Item URL</InputLabel>
+                        <Input id="itemUrl" name="itemUrl" onBlur={(e) => {this.updateItemUrl(e.target.value)}}/>
+                    </FormControl>
+                    {/*
+                    <FormControl margin="normal" fullWidth>
+                        <Input 
+                            id="imageUrl" 
+                            name="imageUrl" 
+                            accept="image/*"
+                            className={classes.input}
+                            multiple
+                            type="file"
+                            onChange={(e) => {this.updateItemUrl(e.target.files)}}/>
+                        <label htmlFor="imageUrl">
+                            <Button variant="contained" component="span" className={classes.button}>
+                            Upload Image
+                            </Button>
+                        </label>
+                    </FormControl>
+                    */}
                     <Button
                         type="submit"
                         fullWidth
