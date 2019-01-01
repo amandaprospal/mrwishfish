@@ -1,4 +1,5 @@
 import auth0 from 'auth0-js';
+import axios from 'axios';
 
 /**
  * Handles authentication.
@@ -22,6 +23,7 @@ class Auth {
         this.isAuthenticated = this.isAuthenticated.bind(this);
         this.signIn = this.signIn.bind(this);
         this.signOut = this.signOut.bind(this);
+        this.userId = null;
     }
 
     /**
@@ -38,6 +40,10 @@ class Auth {
         return this.idToken;
     }
 
+    getUserId() {
+        return this.userId;
+    }
+
     /**
      * Returns whether the current user is authenticated.
      */
@@ -49,7 +55,6 @@ class Auth {
      * Sends unauthenticated users to the Auth0 login page.
      */
     signIn() {
-        console.log('Signed in');
         this.auth0.authorize();
     }
 
@@ -57,43 +62,60 @@ class Auth {
      * Fetches user details and the Auth0 ID token.
      */
     handleAuthentication() {
-    return new Promise((resolve, reject) => {
-        this.auth0.parseHash((err, authResult) => {
-        if (err) return reject(err);
-        if (!authResult || !authResult.idToken) {
-            return reject(err);
-        }
-        this.setSession(authResult);
-        resolve();
+        return new Promise((resolve, reject) => {
+            this.auth0.parseHash((err, authResult) => {
+                if (err) {
+                    return reject(err);
+                }
+                if (!authResult || !authResult.idToken) {
+                    return reject(err);
+                }
+                this.setSession(authResult);
+                resolve();
+            });
         });
-    });
     }
 
     setSession(authResult) {
-    this.idToken = authResult.idToken;
-    this.profile = authResult.idTokenPayload;
-    // set the time that the id token will expire at
-    this.expiresAt = authResult.idTokenPayload.exp * 1000;
+        this.idToken = authResult.idToken;
+        this.profile = authResult.idTokenPayload;
+        // set the time that the id token will expire at
+        this.expiresAt = authResult.idTokenPayload.exp * 1000;
+
+        const _this = this;
+        var getUserEndpoint = 'http://' + process.env.REACT_APP_DOMAIN + ':8080/api/v1/users/' + this.profile.name;
+        axios.get(getUserEndpoint, {
+            headers: { 
+                'Authorization': `Bearer ${auth0Client.getIdToken()}`,
+                "accepts": "application/json"
+            }
+        })
+        .then(function (response) {
+            _this.userId = response.data.user.id;
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
     }
 
     /**
      * Logs out the current user.
      */
     signOut() {
-    this.auth0.logout({
-        returnTo: 'http://'+ process.env.REACT_APP_DOMAIN + ':3000',
-        clientID: 'U0xU6AmmiEkxSRhj1qVG2UgvsJmvYOBt',
-    });
+        this.auth0.logout({
+            returnTo: 'http://'+ process.env.REACT_APP_DOMAIN + ':3000',
+            clientID: 'U0xU6AmmiEkxSRhj1qVG2UgvsJmvYOBt',
+        });
     }
 
     silentAuth() {
-    return new Promise((resolve, reject) => {
-        this.auth0.checkSession({}, (err, authResult) => {
-        if (err) return reject(err);
-        this.setSession(authResult);
-        resolve();
+        return new Promise((resolve, reject) => {
+            this.auth0.checkSession({}, (err, authResult) => {
+            if (err) return reject(err);
+            this.setSession(authResult);
+            resolve();
+            });
         });
-    });
     }
 }
 

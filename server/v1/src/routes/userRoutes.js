@@ -22,6 +22,7 @@ const checkJwt = jwt({
   });
 
 // Retrieve a single user
-router.get('/:id', checkJwt, userController.getUser);
+//router.get('/:id', checkJwt, userController.getUserById);
+router.get('/:emailAddress', checkJwt, userController.getUserByEmailAddress);
 
 module.exports = router;

@@ -10,13 +10,13 @@ export default class User {
     /**
      * Creates a User.
      * 
-     * @param {number} accountId The user's account id.
+     * @param {string} emailAddress The user's email address.
      * @param {string} firstName The user's first name.
      * @param {string} lastName The user's last name.
      */
-    constructor(accountId, firstName, lastName, emailAddress) {
+    constructor(emailAddress, firstName, lastName) {
         this.id = null;
-        this.accountId = accountId;
+        this.emailAddress = emailAddress;
         this.firstName = firstName;
         this.lastName = lastName;
         this.createdDate = null;
@@ -33,21 +33,21 @@ export default class User {
     }
 
     /**
-     * Gets the user's account id.
+     * Gets the user's email address.
      * 
-     * @return {number} The user's account id.
+     * @return {string} The user's email address.
      */
-    getAccountId() {
-        return this.accountId;
+    getEmailAddress() {
+        return this.emailAddress;
     }
 
     /**
-     * Sets the user's account id.
+     * Sets the user's email address.
      * 
-     * @param {number} accountId The user's account id.
+     * @param {string} emailAddress The user's email address.
      */
-    setAccountId(accountId) {
-        this.accountId = accountId;
+    setEmailAddress(emailAddress) {
+        this.emailAddress = emailAddress;
     }
 
     /**
@@ -105,7 +105,7 @@ export default class User {
     }
 
     toString() {
-        return 'ID: ' + this.id + ', Account ID: ' + this.accountId + ', First name: ' + this.firstName + ', Last name: ' + this.lastName + ', Created Date: ' + this.createdDate + ', Updated Date: ' + this.updatedDate;
+        return 'ID: ' + this.id + ', Email Address: ' + this.emailAddress + ', First name: ' + this.firstName + ', Last name: ' + this.lastName + ', Created Date: ' + this.createdDate + ', Updated Date: ' + this.updatedDate;
     }
 
     print() {
@@ -136,9 +136,9 @@ export default class User {
  * 
  * @return void
  */
-export function getUser(userId, callback) {
-    console.log('Entering User.getUser()');
-    userDAO.getUser(userId, function(error, data) {
+export function getUserById(userId, callback) {
+    console.log('Entering User.getUserById()');
+    userDAO.getUserById(userId, function(error, data) {
         if (!error) {
             var userData = data;            
 
@@ -150,13 +150,59 @@ export function getUser(userId, callback) {
                 userData = userData[0];
 
                 var id = userData.id;
-                var account_id = userData.account_id;
+                var email_address = userData.email_address;
                 var first_name = userData.first_name;
                 var last_name = userData.last_name;
                 var created_date = userData.date_created;
                 var updated_date = userData.date_updated;
 
-                var user = new User(account_id, first_name, last_name);
+                var user = new User(email_address, first_name, last_name);
+                user.setId(id);
+                user.setCreatedDate(created_date);
+                user.setUpdatedDate(updated_date);
+
+                callback(null, user);
+            } else {
+                error = new Error(500, 'The database did not return the expected number of results.');
+                callback(error);
+            }
+        } else {
+            error = new Error(500, 'Unable to get the requested user.');
+            callback(error);
+        }
+    });
+}
+
+/**
+ * Retrieves a user by the user's email address.
+ * 
+ * @param {string} emailAddress The user's email address.
+ * @param {function} callback The function to callback to after this function finishes executing.
+ * 
+ * @return void
+ */
+export function getUserByEmailAddress(userEmailAddress, callback) {
+    console.log('Entering User.getUserByEmailAddress()');
+    userDAO.getUserByEmailAddress(userEmailAddress, function(error, data) {
+        if (!error) {
+            var userData = data;            
+
+            if (data.length === 0) {
+                error = new Error(500, 'No matching users were found.');
+                callback(error);
+            } else if (data.length === 1) {
+                //transform user data into a User object
+                userData = userData[0];
+
+                var id = userData.id;
+                
+                var email_address = userData.email_address;
+                var first_name = userData.first_name;
+                var last_name = userData.last_name;
+                var created_date = userData.date_created;
+                var updated_date = userData.date_updated;
+
+                var user = new User(email_address, first_name, last_name);
                 user.setId(id);
                 user.setCreatedDate(created_date);
                 user.setUpdatedDate(updated_date);
