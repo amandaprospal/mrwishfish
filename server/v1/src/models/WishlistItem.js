@@ -232,3 +232,48 @@ export function getWishlistItem(wishlistItemId, callback) {
         }
     });
 }
+
+/**
+ * Retrieves all items for a specific wishlist id.
+ * 
+ * @param {number} wishlistId The wishlist id.
+ * @param {function} callback The function to callback to after this function finishes executing.
+ * 
+ * @return void
+ */
+export function getWishlistItems(wishlistId, callback) {
+    wishlistItemDAO.getWishlistItems(wishlistId, function(error, data) {
+        if (!error) {
+            var wishlistItemData = data;            
+            var wishlistItems = [];
+
+            if (data.length === 0) {
+                callback(null, wishlistItems);
+            } else {
+                for(var i = 0; i < wishlistItemData.length; i++) {
+                    //transform wishlist item data into a WishlistItem object
+                    var id = wishlistItemData[i].id;
+                    var wishlist_id = wishlistItemData[i].wishlist_id;
+                    var name = wishlistItemData[i].name;
+                    var price = wishlistItemData[i].price;
+                    var item_url = wishlistItemData[i].item_url;
+                    var image_url = wishlistItemData[i].image_url;
+                    var is_purchased = wishlistItemData[i].is_purchased;
+                    var created_date = wishlistItemData[i].date_created;
+                    var updated_date = wishlistItemData[i].date_updated;
+
+                    var wishlistItem = new WishlistItem(wishlist_id, name, price, item_url, image_url, is_purchased);
+                    wishlistItem.setId(id);
+                    wishlistItem.setCreatedDate(created_date);
+                    wishlistItem.setUpdatedDate(updated_date);
+                    wishlistItems.push(wishlistItem);
+                }
+
+                callback(null, wishlistItems);
+            }
+        } else {
+            error = new Error(500, 'Unable to get the requested wishlist items.');
+            callback(error);
+        }
+    });
+}

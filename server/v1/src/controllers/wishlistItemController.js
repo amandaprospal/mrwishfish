@@ -1,6 +1,6 @@
 'use strict';
 
-import WishlistItem, {getWishlistItem} from '../models/WishlistItem.js';
+import WishlistItem, {getWishlistItem, getWishlistItems} from '../models/WishlistItem.js';
 
 /** @namespace */
 var wishlistItemController = {};
@@ -13,7 +13,7 @@ var wishlistItemController = {};
  * @param {string} req.body.name The name of the wishlist item.
  * @param {number} [req.body.price=null] The price of the wishlist item.
  * @param {string} req.body.itemUrl The URL to the website of the wishlist item.
- * @param {string} [req.body.imageUrl=null] The URL to the image of the wishlist item.
+ * @param {FormData} [req.body.images=null] The image file for the wishlist item.
  * @param {boolean} [req.body.isPurchased=0] Whether the wishlist item has been purchased.
  * @param {Object} res The Express response object.
  * 
@@ -112,6 +112,36 @@ wishlistItemController.getWishlistItem = function (req, res) {
         } else {
             res.status(200).json({
                 wishlistItem
+            });
+        }
+    });
+};
+
+/**
+ * Retrieves all items for a specific wishlist.
+ * 
+ * @param {Object} req The Express request object.
+ * @param {string} req.params.wishlistId The wishlist id.
+ * @param {Object} res The Express response object.
+ * 
+ * @return 200 if wishlist items were retrieved successfully.
+ *         500 if an error occurred.
+ */
+wishlistItemController.getWishlistItems = function (req, res) {
+    console.log('Entered wishlistItemController.getWishlistItems()');
+
+    var wishlistId = req.params.wishlistId;
+
+    console.log('Received the following wishlist id: ' + wishlistId);
+    
+    getWishlistItems(wishlistId, function processGetWishlistItemResults(error, wishlistItems) {
+        if (error) {
+            res.status(error.statusCode).json({
+                error
+            });
+        } else {
+            res.status(200).json({
+                wishlistItems
             });
         }
     });
