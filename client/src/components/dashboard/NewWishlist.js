@@ -79,7 +79,7 @@ class NewWishlist extends Component {
         });
         var apiHost = 'http://' + process.env.REACT_APP_DOMAIN + ':8080/api/v1/wishlists/';
         await axios.post(apiHost, {
-            userId: 1,
+            userId: auth0Client.getUserId(),
             name: this.state.name,
             isPrivate: this.state.isPrivate
         }, {
