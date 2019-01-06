@@ -1,6 +1,6 @@
 'use strict';
 
-import DAL from '../DAL.js';
+import DAL from '../DataAccessLayer.js';
 import Error from '../../../util/Error.js';
 
 /**
@@ -13,10 +13,6 @@ import Error from '../../../util/Error.js';
  */
 export function createWishlist(wishlist, callback) {
     console.log('Entering wishlistDAO.createWishlist()');
-
-    var dal = new DAL();
-    var db = dal.getConnectionPool();
-
     console.log("Attempting to insert the following wishlist into the database: ");
     wishlist.print();
 
@@ -24,26 +20,16 @@ export function createWishlist(wishlist, callback) {
     var name = wishlist.getName();
     var isPrivate = wishlist.getIsPrivate();
 
-    db.getConnection(function (connectionError, connection) {
-        if (!connectionError) {
-            var query = 'INSERT INTO wishlist (user_id, name, is_private) VALUES (?, ?, ?);';
-            var values = [userId, name, isPrivate];
+    var query = 'INSERT INTO wishlist (user_id, name, is_private) VALUES (?, ?, ?);';
+    var values = [userId, name, isPrivate];
 
-            connection.query(query, values, function processQueryResults(queryError, queryResult) {
-                if (!queryError) {
-                    console.log("The query returned the following result: " + queryResult);
-                    callback(null, queryResult);
-                } else {
-                    console.log("An error occurred executing the query: " + queryError + queryError.sql);
-                    var error = new Error(503, "Unable to execute database query.");
-                    callback(error);
-                }
-                console.log("Closing database connection.");
-                connection.release();
-            });
+    DAL.query(query, values, function processQueryResults(queryError, queryResult) {
+        if (!queryError) {
+            console.log("The query returned the following result: " + queryResult);
+            callback(null, queryResult);
         } else {
-            console.log("There was a problem connecting to the database: " + connectionError);
-            var error = new Error(503, "Unable to connect to the database.");
+            console.log("An error occurred executing the query: " + queryError + queryError.sql);
+            var error = new Error(503, "Unable to execute database query.");
             callback(error);
         }
     });
@@ -60,32 +46,19 @@ export function createWishlist(wishlist, callback) {
 export function getWishlist(id, callback) {
     console.log('Entering wishlistDAO.getWishlist()');
 
-    var dal = new DAL();
-    var db = dal.getConnectionPool();
-
     var wishlistId = id;
     console.log('Searching for the following wishlist id: ' + wishlistId);
 
-    db.getConnection(function (connectionError, connection) {
-        if (!connectionError) {
-            var query = 'SELECT * FROM wishlist WHERE id = ?;';
-            var values = [wishlistId];
+    var query = 'SELECT * FROM wishlist WHERE id = ?;';
+    var values = [wishlistId];
 
-            connection.query(query, values, function processQueryResults(queryError, queryResult) {
-                if (!queryError) {
-                    console.log("The query returned the following result: " + queryResult);
-                    callback(null, queryResult);
-                } else {
-                    console.log("An error occurred executing the query: " + queryError);
-                    var error = new Error(503, "Unable to execute database query.");
-                    callback(error);
-                }
-                console.log("Closing database connection.");
-                connection.release();
-            });
+    DAL.query(query, values, function processQueryResults(queryError, queryResult) {
+        if (!queryError) {
+            console.log("The query returned the following result: " + queryResult);
+            callback(null, queryResult);
         } else {
-            console.log("There was a problem connecting to the database: " + connectionError);
-            var error = new Error(503, "Unable to connect to the database.");
+            console.log("An error occurred executing the query: " + queryError);
+            var error = new Error(503, "Unable to execute database query.");
             callback(error);
         }
     });
@@ -102,32 +75,19 @@ export function getWishlist(id, callback) {
 export function getWishlists(id, callback) {
     console.log('Entering wishlistDAO.getWishlists()');
 
-    var dal = new DAL();
-    var db = dal.getConnectionPool();
-
     var userId = id;
     console.log('Searching for the following user id: ' + userId);
 
-    db.getConnection(function (connectionError, connection) {
-        if (!connectionError) {
-            var query = 'SELECT * FROM wishlist WHERE user_id = ?;';
-            var values = [userId];
+    var query = 'SELECT * FROM wishlist WHERE user_id = ?;';
+    var values = [userId];
 
-            connection.query(query, values, function processQueryResults(queryError, queryResult) {
-                if (!queryError) {
-                    console.log("The query returned the following result: " + queryResult);
-                    callback(null, queryResult);
-                } else {
-                    console.log("An error occurred executing the query: " + queryError);
-                    var error = new Error(503, "Unable to execute database query.");
-                    callback(error);
-                }
-                console.log("Closing database connection.");
-                connection.release();
-            });
+    DAL.query(query, values, function processQueryResults(queryError, queryResult) {
+        if (!queryError) {
+            console.log("The query returned the following result: " + queryResult);
+            callback(null, queryResult);
         } else {
-            console.log("There was a problem connecting to the database: " + connectionError);
-            var error = new Error(503, "Unable to connect to the database.");
+            console.log("An error occurred executing the query: " + queryError);
+            var error = new Error(503, "Unable to execute database query.");
             callback(error);
         }
     });
